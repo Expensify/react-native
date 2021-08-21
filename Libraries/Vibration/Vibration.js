@@ -95,6 +95,10 @@ const Vibration = {
       }
     }
   },
+
+  bip: function(){
+    this.vibrate(20);
+  },
   /**
    * Stop vibration
    *
