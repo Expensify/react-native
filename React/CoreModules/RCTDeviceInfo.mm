@@ -25,10 +25,11 @@ using namespace facebook::react;
 
 @implementation RCTDeviceInfo {
   UIInterfaceOrientation _currentInterfaceOrientation;
+  UIApplicationState _currentAppState;
+
   NSDictionary *_currentInterfaceDimensions;
 }
 
-@synthesize bridge = _bridge;
 @synthesize moduleRegistry = _moduleRegistry;
 
 RCT_EXPORT_MODULE()
@@ -51,13 +52,14 @@ RCT_EXPORT_MODULE()
                                              object:[_moduleRegistry moduleForName:"AccessibilityManager"]];
 
   _currentInterfaceOrientation = [RCTSharedApplication() statusBarOrientation];
+  _currentAppState = [RCTSharedApplication() applicationState];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(interfaceOrientationDidChange)
                                                name:UIApplicationDidChangeStatusBarOrientationNotification
                                              object:nil];
 
-  _currentInterfaceDimensions = RCTExportedDimensions(_moduleRegistry, _bridge);
+  _currentInterfaceDimensions = RCTExportedDimensions(_moduleRegistry);
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(interfaceFrameDidChange)
@@ -96,16 +98,15 @@ static BOOL RCTIsIPhoneX()
   return isIPhoneX;
 }
 
-static NSDictionary *RCTExportedDimensions(RCTModuleRegistry *moduleRegistry, RCTBridge *bridge)
+static NSDictionary *RCTExportedDimensions(RCTModuleRegistry *moduleRegistry)
 {
   RCTAssertMainQueue();
   RCTDimensions dimensions;
   if (moduleRegistry) {
-    RCTAccessibilityManager *accessibilityManager =
-        (RCTAccessibilityManager *)[moduleRegistry moduleForName:"AccessibilityManager"];
-    dimensions = RCTGetDimensions(accessibilityManager ? accessibilityManager.multiplier : 1.0);
+    dimensions = RCTGetDimensions(
+        ((RCTAccessibilityManager *)[moduleRegistry moduleForName:"AccessibilityManager"]).multiplier ?: 1.0);
   } else {
-    RCTAssert(false, @"ModuleRegistry must be set to properly init dimensions. Bridge exists: %d", bridge != nil);
+    RCTAssert(false, @"ModuleRegistry must be set to properly init dimensions.");
   }
   __typeof(dimensions.window) window = dimensions.window;
   NSDictionary<NSString *, NSNumber *> *dimsWindow = @{
@@ -133,10 +134,9 @@ static NSDictionary *RCTExportedDimensions(RCTModuleRegistry *moduleRegistry, RC
 {
   __block NSDictionary<NSString *, id> *constants;
   RCTModuleRegistry *moduleRegistry = _moduleRegistry;
-  RCTBridge *bridge = _bridge;
   RCTUnsafeExecuteOnMainQueueSync(^{
     constants = @{
-      @"Dimensions" : RCTExportedDimensions(moduleRegistry, bridge),
+      @"Dimensions" : RCTExportedDimensions(moduleRegistry),
       // Note:
       // This prop is deprecated and will be removed in a future release.
       // Please use this only for a quick and temporary solution.
@@ -151,14 +151,12 @@ static NSDictionary *RCTExportedDimensions(RCTModuleRegistry *moduleRegistry, RC
 - (void)didReceiveNewContentSizeMultiplier
 {
   RCTModuleRegistry *moduleRegistry = _moduleRegistry;
-  RCTBridge *bridge = _bridge;
   RCTExecuteOnMainQueue(^{
   // Report the event across the bridge.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [[moduleRegistry moduleForName:"EventDispatcher"]
-        sendDeviceEventWithName:@"didUpdateDimensions"
-                           body:RCTExportedDimensions(moduleRegistry, bridge)];
+    [[moduleRegistry moduleForName:"EventDispatcher"] sendDeviceEventWithName:@"didUpdateDimensions"
+                                                                         body:RCTExportedDimensions(moduleRegistry)];
 #pragma clang diagnostic pop
   });
 }
@@ -174,21 +172,24 @@ static NSDictionary *RCTExportedDimensions(RCTModuleRegistry *moduleRegistry, RC
 - (void)_interfaceOrientationDidChange
 {
   UIInterfaceOrientation nextOrientation = [RCTSharedApplication() statusBarOrientation];
+  UIApplicationState nextAppState = [RCTSharedApplication() applicationState];
 
   // Update when we go from portrait to landscape, or landscape to portrait
-  if ((UIInterfaceOrientationIsPortrait(_currentInterfaceOrientation) &&
+  if (((UIInterfaceOrientationIsPortrait(_currentInterfaceOrientation) &&
        !UIInterfaceOrientationIsPortrait(nextOrientation)) ||
       (UIInterfaceOrientationIsLandscape(_currentInterfaceOrientation) &&
-       !UIInterfaceOrientationIsLandscape(nextOrientation))) {
+       !UIInterfaceOrientationIsLandscape(nextOrientation))) && (
+      UIApplicationStateActive == _currentAppState && UIApplicationStateActive == nextAppState
+   )) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [[_moduleRegistry moduleForName:"EventDispatcher"]
-        sendDeviceEventWithName:@"didUpdateDimensions"
-                           body:RCTExportedDimensions(_moduleRegistry, _bridge)];
+    [[_moduleRegistry moduleForName:"EventDispatcher"] sendDeviceEventWithName:@"didUpdateDimensions"
+                                                                          body:RCTExportedDimensions(_moduleRegistry)];
 #pragma clang diagnostic pop
   }
 
   _currentInterfaceOrientation = nextOrientation;
+  _currentAppState = nextAppState;
 }
 
 - (void)interfaceFrameDidChange
@@ -201,9 +202,20 @@ static NSDictionary *RCTExportedDimensions(RCTModuleRegistry *moduleRegistry, RC
 
 - (void)_interfaceFrameDidChange
 {
-  NSDictionary *nextInterfaceDimensions = RCTExportedDimensions(_moduleRegistry, _bridge);
-
-  if (!([nextInterfaceDimensions isEqual:_currentInterfaceDimensions])) {
+  NSDictionary *nextInterfaceDimensions = RCTExportedDimensions(_moduleRegistry);
+  UIApplicationState nextAppState = [RCTSharedApplication() applicationState];
+  
+  BOOL isAppFullscreen = CGRectEqualToRect(
+   [RCTSharedApplication() delegate].window.screen.bounds,
+   [RCTSharedApplication() delegate].window.frame
+  );
+  
+  BOOL isAppActive = (
+    (UIApplicationStateBackground == _currentAppState && UIApplicationStateActive == nextAppState) ||
+    (UIApplicationStateActive == _currentAppState && UIApplicationStateActive == nextAppState)
+  );
+    
+  if (!([nextInterfaceDimensions isEqual:_currentInterfaceDimensions]) && (isAppActive || !isAppFullscreen)) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [[_moduleRegistry moduleForName:"EventDispatcher"] sendDeviceEventWithName:@"didUpdateDimensions"
@@ -212,6 +224,7 @@ static NSDictionary *RCTExportedDimensions(RCTModuleRegistry *moduleRegistry, RC
   }
 
   _currentInterfaceDimensions = nextInterfaceDimensions;
+  _currentAppState = nextAppState;
 }
 
 - (std::shared_ptr<TurboModule>)getTurboModule:(const ObjCTurboModule::InitParams &)params
