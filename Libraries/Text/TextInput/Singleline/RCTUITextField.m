@@ -11,6 +11,7 @@
 #import <React/UIView+React.h>
 #import <React/RCTBackedTextInputDelegateAdapter.h>
 #import <React/RCTTextAttributes.h>
+#import <RCTInputPasteboard.h>
 
 @implementation RCTUITextField {
   RCTBackedTextFieldDelegateAdapter *_textInputDelegateAdapter;
@@ -137,6 +138,10 @@
     return NO;
   }
 
+  if (action == @selector(paste:) && [UIPasteboard generalPasteboard].hasImages) {
+    return true;
+  }
+
   return [super canPerformAction:action withSender:sender];
 }
 
@@ -188,6 +193,14 @@
 
 - (void)paste:(id)sender
 {
+  UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+
+  if (_onFilePaste && [pasteboard hasImages]) {
+    _onFilePaste(@{
+      @"data": [RCTInputPasteboard handlePasteboardItems:pasteboard],
+    });
+  }
+
   _textWasPasted = YES;
   [super paste:sender];
 }
