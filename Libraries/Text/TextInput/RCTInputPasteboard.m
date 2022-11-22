@@ -12,11 +12,6 @@
   } else {
     image = (UIImage *)imageData;
   }
-  size_t width = CGImageGetWidth(image.CGImage);
-  size_t height = CGImageGetHeight(image.CGImage);
-  if (width > 6048 || height > 4032) {
-    // image = [image vImageScaledImageWithSize:CGSizeMake(2048, 2048) contentMode:UIViewContentModeScaleAspectFit];
-  }
   
   if ([type isEqual:@"public.png"]) {
     return UIImagePNGRepresentation(image);
