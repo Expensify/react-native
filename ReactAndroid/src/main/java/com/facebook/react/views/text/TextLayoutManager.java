@@ -104,6 +104,7 @@ public class TextLayoutManager {
 
     for (int i = 0, length = fragments.size(); i < length; i++) {
       ReadableMap fragment = fragments.getMap(i);
+
       int start = sb.length();
 
       // ReactRawText
@@ -180,6 +181,10 @@ public class TextLayoutManager {
           ops.add(
               new SetSpanOperation(
                   start, end, new CustomLineHeightSpan(textAttributes.getEffectiveLineHeight())));
+        }
+
+        if (textAttributes.getTextCodeBlock()) {
+          ops.add(new SetSpanOperation(start, end, new ReactInlineBorderSpan(textAttributes.mFontSize, start, end)));
         }
 
         ops.add(new SetSpanOperation(start, end, new ReactTagSpan(reactTag)));

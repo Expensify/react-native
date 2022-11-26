@@ -86,6 +86,8 @@ public class TextAttributeProps {
   protected float mLetterSpacingInput = Float.NaN;
   protected int mTextAlign = Gravity.NO_GRAVITY;
 
+  protected boolean mTextCodeBlock = false;
+
   // `UNSET` is -1 and is the same as `LayoutDirection.UNDEFINED` but the symbol isn't available.
   protected int mLayoutDirection = UNSET;
 
@@ -246,6 +248,8 @@ public class TextAttributeProps {
     result.setTextTransform(getStringProp(props, PROP_TEXT_TRANSFORM));
     result.setLayoutDirection(getStringProp(props, ViewProps.LAYOUT_DIRECTION));
     result.setAccessibilityRole(getStringProp(props, ViewProps.ACCESSIBILITY_ROLE));
+    result.setTextCodeBlock(getBooleanProp(props, ViewProps.TEXT_CODE_BLOCK, false));
+
     return result;
   }
 
@@ -567,6 +571,14 @@ public class TextAttributeProps {
           "Invalid layoutDirection: " + layoutDirection);
     }
     return androidLayoutDirection;
+  }
+
+  public boolean getTextCodeBlock() {
+    return mTextCodeBlock;
+  }
+
+  private void setTextCodeBlock(boolean textCodeBlock) {
+    mTextCodeBlock = textCodeBlock;
   }
 
   private void setLayoutDirection(@Nullable String layoutDirection) {

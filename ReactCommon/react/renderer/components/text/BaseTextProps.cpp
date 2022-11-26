@@ -185,6 +185,13 @@ static TextAttributes convertRawProp(
       "accessibilityRole",
       sourceTextAttributes.accessibilityRole,
       defaultTextAttributes.accessibilityRole);
+  
+  textAttributes.textCodeBlock = convertRawProp(
+      context,
+      rawProps,
+      "textCodeBlock",
+      sourceTextAttributes.textCodeBlock,
+      defaultTextAttributes.textCodeBlock);
 
   // Color (accessed in this order by ViewProps)
   textAttributes.opacity = convertRawProp(
@@ -294,6 +301,8 @@ void BaseTextProps::setProp(
         defaults, value, textAttributes, opacity, "opacity");
     REBUILD_FIELD_SWITCH_CASE(
         defaults, value, textAttributes, backgroundColor, "backgroundColor");
+    REBUILD_FIELD_SWITCH_CASE(
+        defaults, value, textAttributes, textCodeBlock, "textCodeBlock");
   }
 }
 
