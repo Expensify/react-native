@@ -237,6 +237,7 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
               || parentTextAttributes.getEffectiveLineHeight() != effectiveLineHeight)) {
         ops.add(new SetSpanOperation(start, end, new CustomLineHeightSpan(effectiveLineHeight)));
       }
+
       ops.add(new SetSpanOperation(start, end, new ReactTagSpan(textShadowNode.getReactTag())));
     }
   }

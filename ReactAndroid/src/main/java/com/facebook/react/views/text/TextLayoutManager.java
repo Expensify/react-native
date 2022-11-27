@@ -182,7 +182,6 @@ public class TextLayoutManager {
               new SetSpanOperation(
                   start, end, new CustomLineHeightSpan(textAttributes.getEffectiveLineHeight())));
         }
-
         if (textAttributes.getTextCodeBlock()) {
           ops.add(new SetSpanOperation(start, end, new ReactInlineBorderSpan(textAttributes.mFontSize, start, end)));
         }

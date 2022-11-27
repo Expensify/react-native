@@ -246,6 +246,8 @@ const validAttributesForNonEventProps = {
   position: true,
 
   style: ReactNativeStyleAttributes,
+
+  textCodeBlock: true,
 };
 
 // Props for bubbling and direct events
