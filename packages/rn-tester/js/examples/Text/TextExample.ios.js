@@ -1227,4 +1227,17 @@ exports.examples = [
       );
     },
   },
+  {
+    title: 'Inline code-block',
+    render: function (): React.Node {
+      return (
+        <Text>
+          Inline text example
+          <Text textCodeBlock>
+            This text should wrapped with a border and displayed inline.
+          </Text>
+        </Text>
+      );
+    },
+  },
 ];

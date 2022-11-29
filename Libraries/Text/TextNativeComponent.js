@@ -63,6 +63,7 @@ const virtualTextViewConfig = {
     isHighlighted: true,
     isPressable: true,
     maxFontSizeMultiplier: true,
+    textCodeBlock: true,
   },
   uiViewClassName: 'RCTVirtualText',
 };

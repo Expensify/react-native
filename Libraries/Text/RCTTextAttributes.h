@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString *const RCTTextAttributesIsHighlightedAttributeName;
 extern NSString *const RCTTextAttributesTagAttributeName;
+extern NSString *const RCTTextAttributesIsTextCodeBlockAttributeName;
 
 /**
  * Represents knowledge about all supported *text* attributes
@@ -54,6 +55,7 @@ extern NSString *const RCTTextAttributesTagAttributeName;
 @property (nonatomic, strong, nullable) NSNumber *tag;
 @property (nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property (nonatomic, assign) RCTTextTransform textTransform;
+@property (nonatomic, assign) BOOL textCodeBlock;
 
 #pragma mark - Inheritance
 

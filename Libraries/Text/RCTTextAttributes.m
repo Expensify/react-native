@@ -13,6 +13,7 @@
 
 NSString *const RCTTextAttributesIsHighlightedAttributeName = @"RCTTextAttributesIsHighlightedAttributeName";
 NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttributeName";
+NSString *const RCTTextAttributesIsTextCodeBlockAttributeName = @"RCTTextAttributesIsTextCodeBlockAttributeName";
 
 @implementation RCTTextAttributes
 
@@ -77,6 +78,7 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
   _tag = textAttributes->_tag ?: _tag;
   _layoutDirection = textAttributes->_layoutDirection != UIUserInterfaceLayoutDirectionLeftToRight ? textAttributes->_layoutDirection : _layoutDirection;
   _textTransform = textAttributes->_textTransform != RCTTextTransformUndefined ? textAttributes->_textTransform : _textTransform;
+  _textCodeBlock = textAttributes->_textCodeBlock || _textCodeBlock;
 }
 
 - (NSParagraphStyle *)effectiveParagraphStyle
@@ -187,6 +189,10 @@ NSString *const RCTTextAttributesTagAttributeName = @"RCTTextAttributesTagAttrib
     attributes[RCTTextAttributesTagAttributeName] = _tag;
   }
 
+  if (_textCodeBlock) {
+    attributes[RCTTextAttributesIsTextCodeBlockAttributeName] = @YES;
+  }
+  
   return [attributes copy];
 }
 
@@ -323,7 +329,8 @@ static NSString *capitalizeText(NSString *text)
     RCTTextAttributesCompareOthers(_isHighlighted) &&
     RCTTextAttributesCompareObjects(_tag) &&
     RCTTextAttributesCompareOthers(_layoutDirection) &&
-    RCTTextAttributesCompareOthers(_textTransform);
+    RCTTextAttributesCompareOthers(_textTransform) &&
+    RCTTextAttributesCompareOthers(_textCodeBlock);
 }
 
 @end

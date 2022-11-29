@@ -209,4 +209,9 @@ export type TextProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/text#supperhighlighting
    */
   suppressHighlighting?: ?boolean,
+
+  /**
+   * When `true`, draws inline border around text mostly used for inline code blocks.
+   */
+   textCodeBlock?: ?boolean,
 |}>;
