@@ -53,5 +53,6 @@ RCT_REMAP_SHADOW_PROPERTY(textShadowColor, textAttributes.textShadowColor, UICol
 // Special
 RCT_REMAP_SHADOW_PROPERTY(isHighlighted, textAttributes.isHighlighted, BOOL)
 RCT_REMAP_SHADOW_PROPERTY(textTransform, textAttributes.textTransform, RCTTextTransform)
+RCT_REMAP_SHADOW_PROPERTY(textCodeBlock, textAttributes.textCodeBlock, BOOL)
 
 @end
