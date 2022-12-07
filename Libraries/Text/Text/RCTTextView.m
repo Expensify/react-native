@@ -13,7 +13,6 @@
 #import <React/UIView+React.h>
 
 #import <React/RCTTextShadowView.h>
-#import "RCTInlineBorder.h"
 
 @implementation RCTTextView
 {
@@ -118,13 +117,6 @@
   NSRange glyphRange = [layoutManager glyphRangeForTextContainer:textContainer];
   [layoutManager drawBackgroundForGlyphRange:glyphRange atPoint:_contentFrame.origin];
   [layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:_contentFrame.origin];
-
-  [RCTInlineBorder setInlineBorder:layoutManager
-                   textContainer:textContainer
-                   contentFrame:_contentFrame
-                   textStorage:_textStorage
-                   textCodeBlockAttribute:RCTTextAttributesIsTextCodeBlockAttributeName
-                   textLayer:self.layer];
   
   __block UIBezierPath *highlightPath = nil;
   NSRange characterRange = [layoutManager characterRangeForGlyphRange:glyphRange

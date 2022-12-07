@@ -78,7 +78,12 @@ NSString *const RCTTextAttributesIsTextCodeBlockAttributeName = @"RCTTextAttribu
   _tag = textAttributes->_tag ?: _tag;
   _layoutDirection = textAttributes->_layoutDirection != UIUserInterfaceLayoutDirectionLeftToRight ? textAttributes->_layoutDirection : _layoutDirection;
   _textTransform = textAttributes->_textTransform != RCTTextTransformUndefined ? textAttributes->_textTransform : _textTransform;
-  _textCodeBlock = textAttributes->_textCodeBlock || _textCodeBlock;
+  _textCodeBlock = textAttributes->_textCodeBlock ?: _textCodeBlock;
+}
+
+- (NSDictionary *)textCodeBlock
+{
+  return _textCodeBlock;
 }
 
 - (NSParagraphStyle *)effectiveParagraphStyle
@@ -188,11 +193,11 @@ NSString *const RCTTextAttributesIsTextCodeBlockAttributeName = @"RCTTextAttribu
   if (_tag) {
     attributes[RCTTextAttributesTagAttributeName] = _tag;
   }
-
-  if (_textCodeBlock) {
-    attributes[RCTTextAttributesIsTextCodeBlockAttributeName] = @YES;
-  }
   
+  if (_textCodeBlock) {
+    attributes[RCTTextAttributesIsTextCodeBlockAttributeName] = _textCodeBlock;
+  }
+
   return [attributes copy];
 }
 
@@ -330,7 +335,7 @@ static NSString *capitalizeText(NSString *text)
     RCTTextAttributesCompareObjects(_tag) &&
     RCTTextAttributesCompareOthers(_layoutDirection) &&
     RCTTextAttributesCompareOthers(_textTransform) &&
-    RCTTextAttributesCompareOthers(_textCodeBlock);
+    RCTTextAttributesCompareObjects(_textCodeBlock);
 }
 
 @end

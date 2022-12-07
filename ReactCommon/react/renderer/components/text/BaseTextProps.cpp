@@ -12,17 +12,20 @@
 #include <react/renderer/debug/DebugStringConvertibleItem.h>
 #include <react/renderer/graphics/conversions.h>
 
-#define REBUILD_FIELD_SWITCH_CASE(                  \
-    defaults, rawValue, property, field, fieldName) \
-  case CONSTEXPR_RAW_PROPS_KEY_HASH(fieldName): {   \
-    if (rawValue.hasValue()) {                      \
-      decltype(defaults.field) res;                 \
-      fromRawValue(context, rawValue, res);         \
-      property.field = res;                         \
-    } else {                                        \
-      property.field = defaults.field;              \
-    }                                               \
-    return;                                         \
+#define GET_FIELD_VALUE(field, fieldName, defaultValue, rawValue) \
+  (rawValue.hasValue() ? ({                                       \
+    decltype(defaultValue) res;                                   \
+    fromRawValue(context, rawValue, res);                         \
+    res;                                                          \
+  })                                                              \
+                       : defaultValue)
+
+#define REBUILD_FIELD_SWITCH_CASE(                                   \
+    defaults, rawValue, property, field, fieldName)                  \
+  case CONSTEXPR_RAW_PROPS_KEY_HASH(fieldName): {                    \
+    property.field =                                                 \
+        GET_FIELD_VALUE(field, fieldName, defaults.field, rawValue); \
+    return;                                                          \
   }
 
 namespace facebook {
@@ -185,13 +188,6 @@ static TextAttributes convertRawProp(
       "accessibilityRole",
       sourceTextAttributes.accessibilityRole,
       defaultTextAttributes.accessibilityRole);
-  
-  textAttributes.textCodeBlock = convertRawProp(
-      context,
-      rawProps,
-      "textCodeBlock",
-      sourceTextAttributes.textCodeBlock,
-      defaultTextAttributes.textCodeBlock);
 
   // Color (accessed in this order by ViewProps)
   textAttributes.opacity = convertRawProp(
@@ -206,6 +202,12 @@ static TextAttributes convertRawProp(
       "backgroundColor",
       sourceTextAttributes.backgroundColor,
       defaultTextAttributes.backgroundColor);
+  textAttributes.textCodeBlock = convertRawProp(
+      context,
+      rawProps,
+      "textCodeBlock",
+      sourceTextAttributes.textCodeBlock,
+      defaultTextAttributes.textCodeBlock);
 
   return textAttributes;
 }

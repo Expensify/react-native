@@ -55,7 +55,7 @@ extern NSString *const RCTTextAttributesIsTextCodeBlockAttributeName;
 @property (nonatomic, strong, nullable) NSNumber *tag;
 @property (nonatomic, assign) UIUserInterfaceLayoutDirection layoutDirection;
 @property (nonatomic, assign) RCTTextTransform textTransform;
-@property (nonatomic, assign) BOOL textCodeBlock;
+@property (nonatomic, assign) NSDictionary *textCodeBlock;
 
 #pragma mark - Inheritance
 
