@@ -87,7 +87,7 @@ public class TextAttributeProps {
   protected float mLetterSpacingInput = Float.NaN;
   protected int mTextAlign = Gravity.NO_GRAVITY;
 
-  protected boolean mTextCodeBlock = false;
+  protected ReadableMap mTextCodeBlock;
 
   // `UNSET` is -1 and is the same as `LayoutDirection.UNDEFINED` but the symbol isn't available.
   protected int mLayoutDirection = UNSET;
@@ -209,7 +209,7 @@ public class TextAttributeProps {
           result.setAccessibilityRole(entry.getStringValue());
           break;
         case TA_KEY_TEXT_CODE_BLOCK:
-          result.setTextCodeBlock(entry.getBooleanValue());
+          result.setTextCodeBlock((ReadableMap) entry.getMapBufferValue());
           break;
       }
     }
@@ -252,7 +252,7 @@ public class TextAttributeProps {
     result.setTextTransform(getStringProp(props, PROP_TEXT_TRANSFORM));
     result.setLayoutDirection(getStringProp(props, ViewProps.LAYOUT_DIRECTION));
     result.setAccessibilityRole(getStringProp(props, ViewProps.ACCESSIBILITY_ROLE));
-    result.setTextCodeBlock(getBooleanProp(props, ViewProps.TEXT_CODE_BLOCK, false));
+    result.setTextCodeBlock(getReadableMapProp(props, ViewProps.TEXT_CODE_BLOCK));
 
     return result;
   }
@@ -298,6 +298,15 @@ public class TextAttributeProps {
       return mProps.getBoolean(name, defaultValue);
     } else {
       return defaultValue;
+    }
+  }
+
+  private static ReadableMap getReadableMapProp(
+      ReactStylesDiffMap mProps, String name) {
+    if (mProps.hasKey(name)) {
+      return mProps.getMap(name);
+    } else {
+      return null;
     }
   }
 
@@ -577,11 +586,11 @@ public class TextAttributeProps {
     return androidLayoutDirection;
   }
 
-  public boolean getTextCodeBlock() {
+  public ReadableMap getTextCodeBlock() {
     return mTextCodeBlock;
   }
 
-  private void setTextCodeBlock(boolean textCodeBlock) {
+  private void setTextCodeBlock(ReadableMap textCodeBlock) {
     mTextCodeBlock = textCodeBlock;
   }
 

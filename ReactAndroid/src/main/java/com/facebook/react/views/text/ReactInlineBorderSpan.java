@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Color;
+import com.facebook.react.bridge.ReadableMap;
 
 /**
  * We use a custom {@link LineBackgroundSpan}, because RN Text component can't render borders. Details here:
@@ -23,15 +24,17 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
   private final int effectiveEnd;
   private final int effectiveFontSize;
 
-  private final int backgroundColor = Color.parseColor("#f6f6f6");
-  private final int borderColor = Color.parseColor("#b3b8bc");
-  private final int borderRadius = 8;
-  private final int borderWidth = 2;
+  private int backgroundColor = Color.parseColor("#f6f6f6");
+  private int borderColor = Color.parseColor("#b3b8bc");
+  private int borderRadius = 8;
+  private int borderWidth = 2;
 
-  public ReactInlineBorderSpan(int effectiveFontSize, int effectiveStart, int effectiveEnd) {
+  public ReactInlineBorderSpan(int effectiveFontSize, int effectiveStart, int effectiveEnd, ReadableMap textCodeBlock) {
     this.effectiveFontSize = effectiveFontSize;
     this.effectiveStart = effectiveStart;
     this.effectiveEnd = effectiveEnd;
+    this.backgroundColor = Color.parseColor(textCodeBlock.getString("backgroundColor"));
+    this.borderColor = Color.parseColor(textCodeBlock.getString("borderColor"));
   }
 
   /**

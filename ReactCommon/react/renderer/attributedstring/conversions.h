@@ -276,6 +276,11 @@ inline std::string toString(const FontVariant &fontVariant) {
   return result;
 }
 
+inline std::string toString(const TextCodeBlockStruct &textCodeBlockStruct) {
+  return "{backgroundColor: " + folly::to<std::string>(textCodeBlockStruct.backgroundColor) +
+      ", borderColor: " + folly::to<std::string>(textCodeBlockStruct.borderColor) + "}";
+}
+
 inline void fromRawValue(
     const PropsParserContext &context,
     const RawValue &value,
@@ -705,6 +710,17 @@ inline void fromRawValue(
   result = HyphenationFrequency::None;
 }
 
+inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    TextCodeBlockStruct &result) {
+      auto map = (butter::map<std::string, std::string>)value;
+
+      result.backgroundColor = map["backgroundColor"];
+      result.borderColor = map["borderColor"];
+  return;
+}
+
 inline ParagraphAttributes convertRawProp(
     const PropsParserContext &context,
     RawProps const &rawProps,
@@ -823,6 +839,34 @@ inline folly::dynamic toDynamic(const FontVariant &fontVariant) {
   return result;
 }
 
+inline folly::dynamic toDynamic(const TextCodeBlockStruct &textCodeBlockStruct) {
+  auto _textCodeBlockStruct = folly::dynamic::object();
+  if (!textCodeBlockStruct.backgroundColor.empty()) {
+    _textCodeBlockStruct(
+        "backgroundColor", toString(textCodeBlockStruct.backgroundColor));
+  }
+  if (!textCodeBlockStruct.borderColor.empty()) {
+    _textCodeBlockStruct(
+        "borderColor", toString(textCodeBlockStruct.borderColor));
+  }
+  return _textCodeBlockStruct;
+}
+
+constexpr static MapBuffer::Key TCB_KEY_BACKGROUND_COLOR = 0;
+constexpr static MapBuffer::Key TCB_KEY_BORDER_COLOR = 1;
+constexpr static MapBuffer::Key TCB_KEY_BORDER_RADIUS = 2;
+
+inline MapBuffer toMapBuffer(const TextCodeBlockStruct &textCodeBlockStruct) {
+  auto builder = MapBufferBuilder();
+  if (!textCodeBlockStruct.backgroundColor.empty()) {
+    builder.putString(TCB_KEY_BACKGROUND_COLOR, textCodeBlockStruct.backgroundColor);
+  }
+  if (!textCodeBlockStruct.borderColor.empty()) {
+    builder.putString(TCB_KEY_BORDER_COLOR, textCodeBlockStruct.borderColor);
+  }
+  return builder.build();
+}
+
 inline folly::dynamic toDynamic(const TextAttributes &textAttributes) {
   auto _textAttributes = folly::dynamic::object();
   if (textAttributes.foregroundColor) {
@@ -911,7 +955,7 @@ inline folly::dynamic toDynamic(const TextAttributes &textAttributes) {
   }
   if (textAttributes.textCodeBlock.has_value()) {
     _textAttributes(
-        "textCodeBlock", *textAttributes.textCodeBlock);
+        "textCodeBlock", toDynamic(*textAttributes.textCodeBlock));
   }
   return _textAttributes;
 }
@@ -1129,8 +1173,8 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
         TA_KEY_ACCESSIBILITY_ROLE, toString(*textAttributes.accessibilityRole));
   }
   if (textAttributes.textCodeBlock.has_value()) {
-    builder.putBool(
-        TA_KEY_TEXT_CODE_BLOCK, *textAttributes.textCodeBlock);
+    builder.putString(
+        TA_KEY_TEXT_CODE_BLOCK, toString(*textAttributes.textCodeBlock));
   }
   return builder.build();
 }

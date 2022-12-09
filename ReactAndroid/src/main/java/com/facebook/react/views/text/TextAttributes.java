@@ -10,6 +10,7 @@ package com.facebook.react.views.text;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.uimanager.PixelUtil;
 import com.facebook.react.uimanager.ViewDefaults;
+import com.facebook.react.bridge.ReadableMap;
 
 /*
  * Currently, TextAttributes consists of a subset of text props that need to be passed from parent
@@ -29,7 +30,7 @@ public class TextAttributes {
   private float mMaxFontSizeMultiplier = Float.NaN;
   private float mHeightOfTallestInlineViewOrImage = Float.NaN;
   private TextTransform mTextTransform = TextTransform.UNSET;
-  private boolean mTextCodeBlock = false;
+  private ReadableMap mTextCodeBlock;
 
   public TextAttributes() {}
 
@@ -176,11 +177,11 @@ public class TextAttributes {
         : DEFAULT_MAX_FONT_SIZE_MULTIPLIER;
   }
 
-  public boolean getTextCodeBlock() {
+  public ReadableMap getTextCodeBlock() {
     return mTextCodeBlock;
   }
 
-  public void setTextCodeBlock(boolean textCodeBlock) {
+  public void setTextCodeBlock(ReadableMap textCodeBlock) {
     mTextCodeBlock = textCodeBlock;
   }
 

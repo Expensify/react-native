@@ -63,6 +63,10 @@ public class TextLayoutManagerMapBuffer {
   public static final short PA_KEY_INCLUDE_FONT_PADDING = 4;
   public static final short PA_KEY_HYPHENATION_FREQUENCY = 5;
 
+  public static final short TCB_KEY_BACKGROUND_COLOR = 0;
+  public static final short TCB_KEY_BORDER_COLOR = 1;
+  public static final short TCB_KEY_BORDER_RADIUS = 2;
+
   private static final boolean ENABLE_MEASURE_LOGGING = ReactBuildConfig.DEBUG && false;
 
   private static final String TAG = TextLayoutManagerMapBuffer.class.getSimpleName();
@@ -197,8 +201,8 @@ public class TextLayoutManagerMapBuffer {
               new SetSpanOperation(
                   start, end, new CustomLineHeightSpan(textAttributes.getEffectiveLineHeight())));
         }
-        if (textAttributes.getTextCodeBlock()) {
-          ops.add(new SetSpanOperation(start, end, new ReactInlineBorderSpan(textAttributes.mFontSize, start, end)));
+        if (textAttributes.getTextCodeBlock() != null) {
+          ops.add(new SetSpanOperation(start, end, new ReactInlineBorderSpan(textAttributes.mFontSize, start, end, textAttributes.getTextCodeBlock())));
         }
 
         ops.add(new SetSpanOperation(start, end, new ReactTagSpan(reactTag)));
