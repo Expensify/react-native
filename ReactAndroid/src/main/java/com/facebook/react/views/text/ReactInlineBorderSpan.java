@@ -50,7 +50,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
    */
   private int[] calculateBorderedTextCharRange(int lineStart, int lineEnd) {
     /**
-     * If bordered text's position falls in lines size range return the position of bordered text's first char
+     * If bordered text's position falls within the lines size range return the position of bordered text's first char
      * Otherwise return lines start position.
      * 
      * e.g. given paragraph below:
