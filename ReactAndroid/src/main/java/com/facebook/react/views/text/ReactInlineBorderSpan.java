@@ -24,18 +24,25 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
   private final int effectiveEnd;
   private final int effectiveFontSize;
 
-  private int backgroundColor = Color.parseColor("#f6f6f6");
-  private int borderColor = Color.parseColor("#b3b8bc");
-  private int borderRadius = 8;
+  private int backgroundColor;
+  private int borderColor;
+  private int borderRadius;
   private int borderWidth = 2;
 
   public ReactInlineBorderSpan(int effectiveFontSize, int effectiveStart, int effectiveEnd, ReadableMap textCodeBlock) {
     this.effectiveFontSize = effectiveFontSize;
     this.effectiveStart = effectiveStart;
     this.effectiveEnd = effectiveEnd;
-    this.backgroundColor = Color.parseColor(textCodeBlock.getString("backgroundColor"));
-    this.borderColor = Color.parseColor(textCodeBlock.getString("borderColor"));
-    this.borderRadius = textCodeBlock.getInt("borderRadius");
+    
+    if (textCodeBlock.hasKey("backgroundColor") && !textCodeBlock.isNull("backgroundColor")) {
+      this.backgroundColor = Color.parseColor(textCodeBlock.getString("backgroundColor"));
+    }
+    if (textCodeBlock.hasKey("borderColor") && !textCodeBlock.isNull("borderColor")) {
+      this.borderColor = Color.parseColor(textCodeBlock.getString("borderColor"));
+    }
+    if (textCodeBlock.hasKey("borderRadius") && !textCodeBlock.isNull("borderRadius")) {
+      this.borderRadius = textCodeBlock.getInt("borderRadius");
+    }
   }
 
   /**
