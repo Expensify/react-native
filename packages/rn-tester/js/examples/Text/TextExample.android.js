@@ -894,7 +894,13 @@ class TextExample extends React.Component<{...}> {
         <RNTesterBlock title="textCodeBlock">
           <Text>
             Inline text example
-            <Text textCodeBlock={{backgroundColor: '#333333', borderColor: '#FFFF00', borderRadius: 0}}>
+            <Text
+              style={{color: '#fff'}}
+              textCodeBlock={{
+                backgroundColor: '#333333',
+                borderColor: '#FFFF00',
+                borderRadius: 8,
+              }}>
               This text should wrapped with a border and displayed inline.
             </Text>
           </Text>

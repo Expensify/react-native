@@ -1233,7 +1233,13 @@ exports.examples = [
       return (
         <Text>
           Inline text example
-          <Text textCodeBlock={{backgroundColor: '#333333', borderColor: '#FFFF00', borderRadius: 8}}>
+          <Text
+            style={{color: '#fff'}}
+            textCodeBlock={{
+              backgroundColor: '#333333',
+              borderColor: '#FFFF00',
+              borderRadius: 8,
+            }}>
             This text should wrapped with a border and displayed inline.
           </Text>
         </Text>

@@ -24,6 +24,7 @@ import type {
   AccessibilityActionInfo,
   AccessibilityActionEvent,
 } from '../Components/View/ViewAccessibility';
+import type {TextCodeBlockProp} from './TextCodeBlock';
 
 export type PressRetentionOffset = $ReadOnly<{|
   top: number,
@@ -213,5 +214,5 @@ export type TextProps = $ReadOnly<{|
   /**
    * When `true`, draws inline border around text mostly used for inline code blocks.
    */
-   textCodeBlock?: ?boolean,
+   textCodeBlock?: ?TextCodeBlockProp,
 |}>;
