@@ -240,7 +240,8 @@ struct hash<facebook::react::TextCodeBlockStruct> {
       const facebook::react::TextCodeBlockStruct &textCodeBlockStruct) const {
     return folly::hash::hash_combine(
         textCodeBlockStruct.backgroundColor,
-        textCodeBlockStruct.borderColor
+        textCodeBlockStruct.borderColor,
+        textCodeBlockStruct.borderRadius
     );
   }
 };

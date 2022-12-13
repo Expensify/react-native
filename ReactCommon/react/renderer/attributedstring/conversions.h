@@ -278,6 +278,7 @@ inline std::string toString(const FontVariant &fontVariant) {
 
 inline std::string toString(const TextCodeBlockStruct &textCodeBlockStruct) {
   return "{backgroundColor: " + folly::to<std::string>(textCodeBlockStruct.backgroundColor) +
+      ", borderRadius: " + folly::to<std::string>(textCodeBlockStruct.borderRadius) +
       ", borderColor: " + folly::to<std::string>(textCodeBlockStruct.borderColor) + "}";
 }
 
@@ -714,11 +715,28 @@ inline void fromRawValue(
     const PropsParserContext &context,
     const RawValue &value,
     TextCodeBlockStruct &result) {
-      auto map = (butter::map<std::string, std::string>)value;
+      auto map = (butter::map<std::string, RawValue>)value;
 
-      result.backgroundColor = map["backgroundColor"];
-      result.borderColor = map["borderColor"];
-  return;
+      auto backgroundColor = map.find("backgroundColor");
+      if (backgroundColor != map.end()) {
+        if (backgroundColor->second.hasType<std::string>()) {
+          result.backgroundColor = (std::string)backgroundColor->second;
+        }
+      }
+
+      auto borderColor = map.find("borderColor");
+      if (borderColor != map.end()) {
+        if (borderColor->second.hasType<std::string>()) {
+          result.borderColor = (std::string)borderColor->second;
+        }
+      }
+
+      auto borderRadius = map.find("borderRadius");
+      if (borderRadius != map.end()) {
+        if (borderRadius->second.hasType<int>()) {
+          result.borderRadius = (int)borderRadius->second;
+        }
+      }
 }
 
 inline ParagraphAttributes convertRawProp(
@@ -849,6 +867,10 @@ inline folly::dynamic toDynamic(const TextCodeBlockStruct &textCodeBlockStruct) 
     _textCodeBlockStruct(
         "borderColor", toString(textCodeBlockStruct.borderColor));
   }
+  if (!std::isnan(textCodeBlockStruct.borderRadius)) {
+    _textCodeBlockStruct(
+        "borderRadius", textCodeBlockStruct.borderRadius);
+  }
   return _textCodeBlockStruct;
 }
 
@@ -863,6 +885,9 @@ inline MapBuffer toMapBuffer(const TextCodeBlockStruct &textCodeBlockStruct) {
   }
   if (!textCodeBlockStruct.borderColor.empty()) {
     builder.putString(TCB_KEY_BORDER_COLOR, textCodeBlockStruct.borderColor);
+  }
+  if (!std::isnan(textCodeBlockStruct.borderRadius)) {
+    builder.putInt(TCB_KEY_BORDER_RADIUS, textCodeBlockStruct.borderRadius);
   }
   return builder.build();
 }

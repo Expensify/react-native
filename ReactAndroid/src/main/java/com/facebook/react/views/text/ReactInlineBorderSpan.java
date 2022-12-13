@@ -35,6 +35,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
     this.effectiveEnd = effectiveEnd;
     this.backgroundColor = Color.parseColor(textCodeBlock.getString("backgroundColor"));
     this.borderColor = Color.parseColor(textCodeBlock.getString("borderColor"));
+    this.borderRadius = textCodeBlock.getInt("borderRadius");
   }
 
   /**
