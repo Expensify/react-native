@@ -25,6 +25,7 @@ import type {
   TextLayoutEvent,
 } from '../Types/CoreEventTypes';
 import type {Node} from 'react';
+import type {TextCodeBlockProp} from './TextCodeBlock';
 
 export type PressRetentionOffset = $ReadOnly<{|
   top: number,
@@ -249,4 +250,9 @@ export type TextProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/text.html#linebreakstrategyios
    */
   lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
+
+  /*
+   * When `true`, draws inline border around text mostly used for inline code blocks.
+   */
+   textCodeBlock?: ?TextCodeBlockProp,
 |}>;

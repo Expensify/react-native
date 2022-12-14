@@ -53,6 +53,7 @@ public class TextAttributeProps {
   public static final short TA_KEY_IS_HIGHLIGHTED = 20;
   public static final short TA_KEY_LAYOUT_DIRECTION = 21;
   public static final short TA_KEY_ACCESSIBILITY_ROLE = 22;
+  public static final short TA_KEY_TEXT_CODE_BLOCK = 30;
 
   public static final int UNSET = -1;
 
@@ -85,6 +86,8 @@ public class TextAttributeProps {
   protected float mLineHeightInput = UNSET;
   protected float mLetterSpacingInput = Float.NaN;
   protected int mTextAlign = Gravity.NO_GRAVITY;
+
+  protected ReadableMap mTextCodeBlock;
 
   // `UNSET` is -1 and is the same as `LayoutDirection.UNDEFINED` but the symbol isn't available.
   protected int mLayoutDirection = UNSET;
@@ -205,6 +208,9 @@ public class TextAttributeProps {
         case TA_KEY_ACCESSIBILITY_ROLE:
           result.setAccessibilityRole(entry.getStringValue());
           break;
+        case TA_KEY_TEXT_CODE_BLOCK:
+          result.setTextCodeBlock((ReadableMap) entry.getMapBufferValue());
+          break;
       }
     }
 
@@ -246,6 +252,8 @@ public class TextAttributeProps {
     result.setTextTransform(getStringProp(props, PROP_TEXT_TRANSFORM));
     result.setLayoutDirection(getStringProp(props, ViewProps.LAYOUT_DIRECTION));
     result.setAccessibilityRole(getStringProp(props, ViewProps.ACCESSIBILITY_ROLE));
+    result.setTextCodeBlock(getReadableMapProp(props, ViewProps.TEXT_CODE_BLOCK));
+
     return result;
   }
 
@@ -290,6 +298,15 @@ public class TextAttributeProps {
       return mProps.getBoolean(name, defaultValue);
     } else {
       return defaultValue;
+    }
+  }
+
+  private static ReadableMap getReadableMapProp(
+      ReactStylesDiffMap mProps, String name) {
+    if (mProps.hasKey(name)) {
+      return mProps.getMap(name);
+    } else {
+      return null;
     }
   }
 
@@ -567,6 +584,14 @@ public class TextAttributeProps {
           "Invalid layoutDirection: " + layoutDirection);
     }
     return androidLayoutDirection;
+  }
+
+  public ReadableMap getTextCodeBlock() {
+    return mTextCodeBlock;
+  }
+
+  private void setTextCodeBlock(ReadableMap textCodeBlock) {
+    mTextCodeBlock = textCodeBlock;
   }
 
   private void setLayoutDirection(@Nullable String layoutDirection) {

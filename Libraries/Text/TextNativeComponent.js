@@ -46,6 +46,7 @@ const textViewConfig = {
     dataDetectorType: true,
     android_hyphenationFrequency: true,
     lineBreakStrategyIOS: true,
+    textCodeBlock: true,
   },
   directEventTypes: {
     topTextLayout: {
@@ -63,6 +64,7 @@ const virtualTextViewConfig = {
     isHighlighted: true,
     isPressable: true,
     maxFontSizeMultiplier: true,
+    textCodeBlock: true,
   },
   uiViewClassName: 'RCTVirtualText',
 };

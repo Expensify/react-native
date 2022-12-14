@@ -185,6 +185,7 @@ const validAttributesForNonEventProps = {
   translateX: true,
   translateY: true,
   accessibilityLiveRegion: true,
+  needsOffscreenAlphaCompositing: true,
 
   // @ReactProps from LayoutShadowNode
   width: true,

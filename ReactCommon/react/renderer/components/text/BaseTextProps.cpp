@@ -190,6 +190,12 @@ static TextAttributes convertRawProp(
       "backgroundColor",
       sourceTextAttributes.backgroundColor,
       defaultTextAttributes.backgroundColor);
+  textAttributes.textCodeBlock = convertRawProp(
+      context,
+      rawProps,
+      "textCodeBlock",
+      sourceTextAttributes.textCodeBlock,
+      defaultTextAttributes.textCodeBlock);
 
   return textAttributes;
 }
@@ -291,6 +297,8 @@ void BaseTextProps::setProp(
         defaults, value, textAttributes, opacity, "opacity");
     REBUILD_FIELD_SWITCH_CASE(
         defaults, value, textAttributes, backgroundColor, "backgroundColor");
+    REBUILD_FIELD_SWITCH_CASE(
+        defaults, value, textAttributes, textCodeBlock, "textCodeBlock");
   }
 }
 

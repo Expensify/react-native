@@ -218,6 +218,17 @@ NSDictionary<NSAttributedStringKey, id> *RCTNSTextAttributesFromTextAttributes(T
   if (textAttributes.isHighlighted) {
     attributes[RCTAttributedStringIsHighlightedAttributeName] = @YES;
   }
+  
+  if (textAttributes.textCodeBlock) {
+    NSString *backgroundColor = [NSString stringWithCString:textAttributes.textCodeBlock.value().backgroundColor.c_str() encoding:NSUTF8StringEncoding];
+    NSString *borderColor = [NSString stringWithCString:textAttributes.textCodeBlock.value().borderColor.c_str() encoding:NSUTF8StringEncoding];
+    
+    attributes[RCTTextAttributesIsTextCodeBlockAttributeName] = @{
+      @"backgroundColor": backgroundColor,
+      @"borderColor": borderColor,
+      @"borderRadius": @(textAttributes.textCodeBlock.value().borderRadius),
+    };
+  }
 
   if (textAttributes.accessibilityRole.has_value()) {
     auto accessibilityRole = textAttributes.accessibilityRole.value();

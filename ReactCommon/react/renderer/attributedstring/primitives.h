@@ -137,6 +137,24 @@ enum class HyphenationFrequency {
   Full // Standard amount of hyphenation.
 };
 
+struct TextCodeBlockStruct {
+  std::string backgroundColor;
+  std::string borderColor;
+  int borderRadius;
+};
+
+inline bool operator==(
+    const TextCodeBlockStruct &lhs,
+    const TextCodeBlockStruct &rhs) {
+  return false;
+}
+
+inline bool operator!=(
+    const TextCodeBlockStruct &lhs,
+    const TextCodeBlockStruct &rhs) {
+  return !(lhs == rhs);
+}
+
 } // namespace react
 } // namespace facebook
 
@@ -222,6 +240,18 @@ template <>
 struct hash<facebook::react::HyphenationFrequency> {
   size_t operator()(const facebook::react::HyphenationFrequency &v) const {
     return hash<int>()(static_cast<int>(v));
+  }
+};
+
+template <>
+struct hash<facebook::react::TextCodeBlockStruct> {
+  size_t operator()(
+      const facebook::react::TextCodeBlockStruct &textCodeBlockStruct) const {
+    return folly::hash::hash_combine(
+        textCodeBlockStruct.backgroundColor,
+        textCodeBlockStruct.borderColor,
+        textCodeBlockStruct.borderRadius
+    );
   }
 };
 } // namespace std

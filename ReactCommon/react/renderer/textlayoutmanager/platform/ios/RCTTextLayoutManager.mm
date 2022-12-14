@@ -14,6 +14,8 @@
 #import <react/utils/ManagedObjectWrapper.h>
 #import <react/utils/SimpleThreadSafeCache.h>
 
+#import "RCTTextCodeBlock.h"
+
 using namespace facebook::react;
 
 @implementation RCTTextLayoutManager {
@@ -182,7 +184,7 @@ static NSLineBreakMode RCTNSLineBreakModeFromEllipsizeMode(EllipsizeMode ellipsi
       : NSLineBreakByClipping;
   textContainer.maximumNumberOfLines = paragraphAttributes.maximumNumberOfLines;
 
-  NSLayoutManager *layoutManager = [NSLayoutManager new];
+  NSLayoutManager *layoutManager = [RCTTextCodeBlock new];
   layoutManager.usesFontLeading = NO;
   [layoutManager addTextContainer:textContainer];
 

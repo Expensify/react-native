@@ -900,6 +900,20 @@ class TextExample extends React.Component<{...}> {
             employee@facebook.com
           </Text>
         </RNTesterBlock>
+        <RNTesterBlock title="textCodeBlock">
+          <Text>
+            Inline text example
+            <Text
+              style={{color: '#fff'}}
+              textCodeBlock={{
+                backgroundColor: '#002E22',
+                borderColor: '#1B5744',
+                borderRadius: 4,
+              }}>
+              This text should wrapped with a border and displayed inline.
+            </Text>
+          </Text>
+        </RNTesterBlock>
       </RNTesterPage>
     );
   }
