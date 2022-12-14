@@ -14,7 +14,6 @@
 
 #import "NSTextStorage+FontScaling.h"
 #import <React/RCTTextView.h>
-
 #import "RCTTextCodeBlock.h"
 
 @implementation RCTTextShadowView
