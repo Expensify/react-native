@@ -104,7 +104,6 @@ public class TextLayoutManager {
 
     for (int i = 0, length = fragments.size(); i < length; i++) {
       ReadableMap fragment = fragments.getMap(i);
-
       int start = sb.length();
 
       // ReactRawText

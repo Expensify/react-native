@@ -234,7 +234,6 @@
   textContainer.maximumNumberOfLines = _maximumNumberOfLines;
 
   NSLayoutManager *layoutManager = [RCTTextCodeBlock new];
-
   layoutManager.usesFontLeading = NO;
   [layoutManager addTextContainer:textContainer];
 
