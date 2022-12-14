@@ -55,7 +55,6 @@
           __block UIBezierPath *textCodeBlockPath = nil;
 
           NSRange lineRange = NSIntersectionRange(range, lineGlyphRange);
-          NSLog(@"test %@ %@", NSStringFromRange(lineRange), backgroundColor);
         
           [self enumerateEnclosingRectsForGlyphRange:lineRange
                             withinSelectedGlyphRange:lineRange
