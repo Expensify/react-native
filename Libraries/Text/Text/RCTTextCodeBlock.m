@@ -27,6 +27,10 @@
 -(void)drawBackgroundForGlyphRange:(NSRange)glyphsToShow atPoint:(CGPoint)origin {
     [super drawBackgroundForGlyphRange:glyphsToShow atPoint:origin];
 
+    if ((glyphsToShow.location + glyphsToShow.length) > [[self textStorage] length]) {
+      return;
+    }
+  
     [[self textStorage] enumerateAttribute:RCTTextAttributesIsTextCodeBlockAttributeName
                                     inRange:glyphsToShow
                                     options:0
