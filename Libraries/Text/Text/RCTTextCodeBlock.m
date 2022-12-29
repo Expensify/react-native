@@ -39,6 +39,7 @@
       NSString *backgroundColor = [textCodeBlock objectForKey:@"backgroundColor"];
       NSString *borderColor = [textCodeBlock objectForKey:@"borderColor"];
       float borderRadius = [[textCodeBlock objectForKey:@"borderRadius"] floatValue];
+      float borderWidth = [[textCodeBlock objectForKey:@"borderWidth"] floatValue];
       
       CGContextRef context = UIGraphicsGetCurrentContext();
       CGContextSetFillColorWithColor(context, [self hexStringToColor:backgroundColor].CGColor);
@@ -69,6 +70,7 @@
                 textCodeBlockPath = path;
               }
               
+              textCodeBlockPath.lineWidth = borderWidth;
               [textCodeBlockPath stroke];
               [textCodeBlockPath fill];
           }];

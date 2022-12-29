@@ -909,6 +909,7 @@ class TextExample extends React.Component<{...}> {
                 backgroundColor: '#002E22',
                 borderColor: '#1B5744',
                 borderRadius: 4,
+                borderWidth: 2,
               }}>
               This text should wrapped with a border and displayed inline.
             </Text>

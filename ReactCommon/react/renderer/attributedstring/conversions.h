@@ -279,6 +279,7 @@ inline std::string toString(const FontVariant &fontVariant) {
 inline std::string toString(const TextCodeBlockStruct &textCodeBlockStruct) {
   return "{backgroundColor: " + folly::to<std::string>(textCodeBlockStruct.backgroundColor) +
       ", borderRadius: " + folly::to<std::string>(textCodeBlockStruct.borderRadius) +
+      ", borderWidth: " + folly::to<std::string>(textCodeBlockStruct.borderWidth) +
       ", borderColor: " + folly::to<std::string>(textCodeBlockStruct.borderColor) + "}";
 }
 
@@ -761,28 +762,35 @@ inline void fromRawValue(
     const PropsParserContext &context,
     const RawValue &value,
     TextCodeBlockStruct &result) {
-      auto map = (butter::map<std::string, RawValue>)value;
+  auto map = (butter::map<std::string, RawValue>)value;
 
-      auto backgroundColor = map.find("backgroundColor");
-      if (backgroundColor != map.end()) {
-        if (backgroundColor->second.hasType<std::string>()) {
-          result.backgroundColor = (std::string)backgroundColor->second;
-        }
-      }
+  auto backgroundColor = map.find("backgroundColor");
+  if (backgroundColor != map.end()) {
+    if (backgroundColor->second.hasType<std::string>()) {
+      result.backgroundColor = (std::string)backgroundColor->second;
+    }
+  }
 
-      auto borderColor = map.find("borderColor");
-      if (borderColor != map.end()) {
-        if (borderColor->second.hasType<std::string>()) {
-          result.borderColor = (std::string)borderColor->second;
-        }
-      }
+  auto borderColor = map.find("borderColor");
+  if (borderColor != map.end()) {
+    if (borderColor->second.hasType<std::string>()) {
+      result.borderColor = (std::string)borderColor->second;
+    }
+  }
 
-      auto borderRadius = map.find("borderRadius");
-      if (borderRadius != map.end()) {
-        if (borderRadius->second.hasType<int>()) {
-          result.borderRadius = (int)borderRadius->second;
-        }
-      }
+  auto borderRadius = map.find("borderRadius");
+  if (borderRadius != map.end()) {
+    if (borderRadius->second.hasType<int>()) {
+      result.borderRadius = (int)borderRadius->second;
+    }
+  }
+
+  auto borderWidth = map.find("borderWidth");
+  if (borderWidth != map.end()) {
+    if (borderWidth->second.hasType<int>()) {
+      result.borderWidth = (int)borderWidth->second;
+    }
+  }
 }
 
 inline ParagraphAttributes convertRawProp(
@@ -917,12 +925,17 @@ inline folly::dynamic toDynamic(const TextCodeBlockStruct &textCodeBlockStruct) 
     _textCodeBlockStruct(
         "borderRadius", textCodeBlockStruct.borderRadius);
   }
+  if (!std::isnan(textCodeBlockStruct.borderWidth)) {
+    _textCodeBlockStruct(
+        "borderWidth", textCodeBlockStruct.borderWidth);
+  }
   return _textCodeBlockStruct;
 }
 
 constexpr static MapBuffer::Key TCB_KEY_BACKGROUND_COLOR = 0;
 constexpr static MapBuffer::Key TCB_KEY_BORDER_COLOR = 1;
 constexpr static MapBuffer::Key TCB_KEY_BORDER_RADIUS = 2;
+constexpr static MapBuffer::Key TCB_KEY_BORDER_WIDTH = 3;
 
 inline MapBuffer toMapBuffer(const TextCodeBlockStruct &textCodeBlockStruct) {
   auto builder = MapBufferBuilder();
@@ -934,6 +947,9 @@ inline MapBuffer toMapBuffer(const TextCodeBlockStruct &textCodeBlockStruct) {
   }
   if (!std::isnan(textCodeBlockStruct.borderRadius)) {
     builder.putInt(TCB_KEY_BORDER_RADIUS, textCodeBlockStruct.borderRadius);
+  }
+  if (!std::isnan(textCodeBlockStruct.borderWidth)) {
+    builder.putInt(TCB_KEY_BORDER_WIDTH, textCodeBlockStruct.borderWidth);
   }
   return builder.build();
 }

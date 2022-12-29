@@ -141,6 +141,7 @@ struct TextCodeBlockStruct {
   std::string backgroundColor;
   std::string borderColor;
   int borderRadius;
+  int borderWidth;
 };
 
 inline bool operator==(
@@ -250,7 +251,8 @@ struct hash<facebook::react::TextCodeBlockStruct> {
     return folly::hash::hash_combine(
         textCodeBlockStruct.backgroundColor,
         textCodeBlockStruct.borderColor,
-        textCodeBlockStruct.borderRadius
+        textCodeBlockStruct.borderRadius,
+        textCodeBlockStruct.borderWidth
     );
   }
 };

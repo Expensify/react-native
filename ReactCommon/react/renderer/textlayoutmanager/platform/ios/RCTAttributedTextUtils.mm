@@ -226,6 +226,7 @@ NSDictionary<NSAttributedStringKey, id> *RCTNSTextAttributesFromTextAttributes(T
     attributes[RCTTextAttributesIsTextCodeBlockAttributeName] = @{
       @"backgroundColor": backgroundColor,
       @"borderColor": borderColor,
+      @"borderWidth": @(textAttributes.textCodeBlock.value().borderWidth),
       @"borderRadius": @(textAttributes.textCodeBlock.value().borderRadius),
     };
   }

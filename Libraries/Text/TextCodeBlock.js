@@ -25,4 +25,9 @@ export type TextCodeBlockProp = $ReadOnly<{|
    * The border radius of the text code block.
    */
   borderRadius?: ?number,
+
+  /**
+   * The border width of the text code block.
+   */
+  borderWidth?: ?number,
 |}>;
