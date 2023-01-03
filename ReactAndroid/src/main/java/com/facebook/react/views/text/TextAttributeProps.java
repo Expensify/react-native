@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.common.mapbuffer.MapBuffer;
 import com.facebook.react.uimanager.PixelUtil;
 import com.facebook.react.uimanager.ReactAccessibilityDelegate;
@@ -54,6 +56,11 @@ public class TextAttributeProps {
   public static final short TA_KEY_LAYOUT_DIRECTION = 21;
   public static final short TA_KEY_ACCESSIBILITY_ROLE = 22;
   public static final short TA_KEY_TEXT_CODE_BLOCK = 30;
+
+  public static final short TCB_KEY_BACKGROUND_COLOR = 0;
+  public static final short TCB_KEY_BORDER_COLOR = 1;
+  public static final short TCB_KEY_BORDER_RADIUS = 2;
+  public static final short TCB_KEY_BORDER_WIDTH = 3;
 
   public static final int UNSET = -1;
 
@@ -209,7 +216,7 @@ public class TextAttributeProps {
           result.setAccessibilityRole(entry.getStringValue());
           break;
         case TA_KEY_TEXT_CODE_BLOCK:
-          result.setTextCodeBlock((ReadableMap) entry.getMapBufferValue());
+          result.setTextCodeBlock(entry.getMapBufferValue());
           break;
       }
     }
@@ -588,6 +595,31 @@ public class TextAttributeProps {
 
   public ReadableMap getTextCodeBlock() {
     return mTextCodeBlock;
+  }
+
+  private void setTextCodeBlock(@Nullable MapBuffer textCodeBlock) {
+    Iterator<MapBuffer.Entry> iterator = textCodeBlock.iterator();
+    WritableMap result = new WritableNativeMap();
+
+    while (iterator.hasNext()) {
+      MapBuffer.Entry entry = iterator.next();
+      switch (entry.getKey()) {
+        case TCB_KEY_BACKGROUND_COLOR:
+          result.putString("backgroundColor", entry.getStringValue());
+          break;
+        case TCB_KEY_BORDER_COLOR:
+          result.putString("borderColor", entry.getStringValue());
+          break;
+        case TCB_KEY_BORDER_RADIUS:
+          result.putInt("borderRadius", entry.getIntValue());
+          break;
+        case TCB_KEY_BORDER_WIDTH:
+          result.putInt("borderWidth", entry.getIntValue());
+          break;
+      }
+    }
+
+    mTextCodeBlock = result;
   }
 
   private void setTextCodeBlock(ReadableMap textCodeBlock) {

@@ -1271,8 +1271,8 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
         TA_KEY_ACCESSIBILITY_ROLE, toString(*textAttributes.accessibilityRole));
   }
   if (textAttributes.textCodeBlock.has_value()) {
-    builder.putString(
-        TA_KEY_TEXT_CODE_BLOCK, toString(*textAttributes.textCodeBlock));
+    builder.putMapBuffer(
+        TA_KEY_TEXT_CODE_BLOCK, toMapBuffer(*textAttributes.textCodeBlock));
   }
   return builder.build();
 }

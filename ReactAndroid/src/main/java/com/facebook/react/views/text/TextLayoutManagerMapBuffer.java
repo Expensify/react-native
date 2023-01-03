@@ -62,10 +62,6 @@ public class TextLayoutManagerMapBuffer {
   public static final short PA_KEY_INCLUDE_FONT_PADDING = 4;
   public static final short PA_KEY_HYPHENATION_FREQUENCY = 5;
 
-  public static final short TCB_KEY_BACKGROUND_COLOR = 0;
-  public static final short TCB_KEY_BORDER_COLOR = 1;
-  public static final short TCB_KEY_BORDER_RADIUS = 2;
-
   private static final boolean ENABLE_MEASURE_LOGGING = ReactBuildConfig.DEBUG && false;
 
   private static final String TAG = TextLayoutManagerMapBuffer.class.getSimpleName();
