@@ -252,7 +252,9 @@ export type TextProps = $ReadOnly<{|
   lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
 
   /*
-   * When `true`, draws inline border around text mostly used for inline code blocks.
+   * Draws inline border around text with background, mostly used for inline code blocks.
+   *
+   * See https://github.com/Expensify/App/issues/4733
    */
    textCodeBlock?: ?TextCodeBlockProp,
 |}>;
