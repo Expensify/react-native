@@ -69,7 +69,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
   /**
    * Generate Rect that will be used to cover bordered background layer.
    */
-  private RectF generateTextBounds(Paint paint, int top, int bottom, CharSequence text, int start, int end) {
+  private RectF generateTextBounds(Canvas canvas, Paint paint, int left, int right, int top, int baseline, int bottom, CharSequence text, int start, int end, int lineNumber) {
     int[] borderedTextRange = this.calculateBorderedTextCharRange(start, end);
     
     /**
@@ -82,9 +82,15 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
     int borderedTextWidth = Math.round(paint.measureText(text, borderedTextRange[0], borderedTextRange[1]));
 
     RectF rect = new RectF();
-    int leftPosition = prependedTextWidth;
-    int rightPosition = prependedTextWidth + borderedTextWidth;
-    rect.set(prependedTextWidth, top, prependedTextWidth + borderedTextWidth, bottom);
+
+    /**
+     * Overflow offset to hide border radius on leading lines,
+     * so that left border radius is only shown on first and right on last line.
+     */
+    int offset = 10;
+    int leftPosition = prependedTextWidth - (lineNumber == 0 ? 0 : offset);
+    int rightPosition = end < effectiveEnd ? right + offset : prependedTextWidth + borderedTextWidth;
+    rect.set(leftPosition, top, rightPosition, bottom);
 
     return rect;
   }
@@ -96,7 +102,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
      */
     paint.setTextSize(this.effectiveFontSize);
 
-    RectF rect = generateTextBounds(paint, top, bottom, text, start, end);
+    RectF rect = generateTextBounds(canvas, paint, left, right, top, baseline, bottom, text, start, end, lineNumber);
 
     /**
      * Draw filled background 
