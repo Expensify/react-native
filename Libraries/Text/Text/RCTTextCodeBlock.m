@@ -61,8 +61,22 @@
                             withinSelectedGlyphRange:lineRange
                                      inTextContainer:textContainer
                                           usingBlock:^(CGRect enclosingRect, __unused BOOL *anotherStop) {
+            
+            BOOL isFirstLine = lineGlyphRange.location == 0;
+            BOOL isLastLine = range.length + range.location == lineGlyphRange.length + lineGlyphRange.location;
+            long corners = (
+              (isFirstLine ? (UIRectCornerTopLeft | UIRectCornerBottomLeft) : 0) |
+              (isLastLine ? (UIRectCornerTopRight | UIRectCornerBottomRight) : 0)
+            );
 
-              UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(enclosingRect, 0, 0) cornerRadius:borderRadius];
+            CGRect resultRect = CGRectMake(
+              enclosingRect.origin.x,
+              enclosingRect.origin.y,
+              enclosingRect.size.width * ((isFirstLine && isLastLine) || isLastLine ? 1 : 2),
+              enclosingRect.size.height
+            );
+
+            UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:resultRect byRoundingCorners:corners cornerRadii:CGSizeMake(borderRadius, borderRadius)];
 
               if (textCodeBlockPath) {
                 [textCodeBlockPath appendPath:path];

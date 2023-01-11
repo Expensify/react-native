@@ -900,23 +900,44 @@ class TextExample extends React.Component<{...}> {
             employee@facebook.com
           </Text>
         </RNTesterBlock>
-        <RNTesterBlock title="textCodeBlock">
-          <Text>
-            Inline text example&thinsp;
-            <Text
-              style={{color: '#fff'}}
-              textCodeBlock={{
-                backgroundColor: '#002E22',
-                borderColor: '#1B5744',
-                borderRadius: 12,
-                borderWidth: 2,
-              }}>&thinsp;This text should wrapped with a border and displayed inline.&thinsp;</Text>
-          </Text>
+        <RNTesterBlock title="Inline code-block">
+          <View>
+            <Text>
+              &nbsp;
+              <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+                &nbsp;This text.&nbsp;
+              </Text>
+            </Text>
+
+            <Text>
+              Inline text example&nbsp;
+              <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+                &nbsp;This text.&nbsp;
+              </Text>
+            </Text>
+
+            <Text>
+              Inline text example&nbsp;
+              <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+                &nbsp;This text should wrapped with a border and displayed
+                inline. This text should wrapped with a border and displayed
+                inline.&nbsp;
+              </Text>
+            </Text>
+          </View>
         </RNTesterBlock>
       </RNTesterPage>
     );
   }
 }
+
+const textCodeBlock = {
+  backgroundColor: '#002E22',
+  borderColor: '#1B5744',
+  borderRadius: 4,
+  borderWidth: 2,
+};
+
 const styles = StyleSheet.create({
   backgroundColorText: {
     left: 5,
