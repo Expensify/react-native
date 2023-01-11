@@ -72,7 +72,7 @@
             CGRect resultRect = CGRectMake(
               enclosingRect.origin.x,
               enclosingRect.origin.y,
-              enclosingRect.size.width * ((isFirstLine && isLastLine) || isLastLine ? 1 : 2),
+              enclosingRect.size.width + ((isFirstLine && isLastLine) || isLastLine ? 0 : [[UIScreen mainScreen] bounds].size.width),
               enclosingRect.size.height
             );
 
