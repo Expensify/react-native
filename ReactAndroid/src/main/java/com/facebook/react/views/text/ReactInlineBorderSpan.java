@@ -91,7 +91,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
     int offset = 10;
     int leftPosition = prependedTextWidth - (lineNumber == 0 ? 0 : offset);
     int rightPosition = prependedTextWidth + borderedTextWidth + (end < effectiveEnd ? offset : 0);
-    rect.set(leftPosition, top + (borderWidth + 1), rightPosition, bottom - (borderWidth + 1));
+    rect.set(leftPosition, top + borderWidth / 2, rightPosition, bottom - borderWidth / 2);
 
     return rect;
   }

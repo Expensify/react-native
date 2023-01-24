@@ -1294,21 +1294,21 @@ exports.examples = [
       };
       return (
         <View>
-          <Text>
+          <Text style={{lineHeight: 20}}>
             &nbsp;
             <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
               &nbsp;This text.&nbsp;
             </Text>
           </Text>
 
-          <Text>
+          <Text style={{lineHeight: 20}}>
             Inline text example&nbsp;
             <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
               &nbsp;This text.&nbsp;
             </Text>
           </Text>
 
-          <Text>
+          <Text style={{lineHeight: 20}}>
             Inline text example&nbsp;
             <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
               &nbsp;This text should wrapped with a border and displayed inline.
@@ -1316,7 +1316,7 @@ exports.examples = [
             </Text>
           </Text>
 
-          <Text>
+          <Text style={{lineHeight: 20}}>
             Inline text example&nbsp;
             <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
               &nbsp;T histextshouldwrappedwithaborderanddisplayed inline. This
