@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Color;
+import android.graphics.Path;
 import com.facebook.react.bridge.ReadableMap;
 
 /**
@@ -89,20 +90,37 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
      */
     int offset = 10;
     int leftPosition = prependedTextWidth - (lineNumber == 0 ? 0 : offset);
-    int rightPosition = end < effectiveEnd ? right + offset : prependedTextWidth + borderedTextWidth;
-    rect.set(leftPosition, top, rightPosition, bottom);
+    int rightPosition = prependedTextWidth + borderedTextWidth + (end < effectiveEnd ? offset : 0);
+    rect.set(leftPosition, top + (borderWidth + 1), rightPosition, bottom - (borderWidth + 1));
 
     return rect;
   }
 
+  private float[] generateTextCorners(Canvas canvas, Paint paint, int left, int right, int top, int baseline, int bottom, CharSequence text, int start, int end, int lineNumber) {
+    if (lineNumber == 0) {
+      return new float[]{this.borderRadius, this.borderRadius, 0, 0, 0, 0, this.borderRadius, this.borderRadius};
+    }
+
+    if (end >= effectiveEnd) {
+      return new float[]{0, 0, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, 0, 0};
+    }
+
+    return new float[]{0, 0, 0, 0, 0, 0, 0, 0};
+  }
+
+
   @Override
   public void drawBackground(Canvas canvas, Paint paint, int left, int right, int top, int baseline, int bottom, CharSequence text, int start, int end, int lineNumber) {
+    float[] corners = generateTextCorners(canvas, paint, left, right, top, baseline, bottom, text, start, end, lineNumber);
+    final Path path = new Path();
+
     /**
      * Set's RN Text size for the canvas to measure accurate metrics
      */
     paint.setTextSize(this.effectiveFontSize);
 
     RectF rect = generateTextBounds(canvas, paint, left, right, top, baseline, bottom, text, start, end, lineNumber);
+    path.addRoundRect(rect, corners, Path.Direction.CW);
 
     /**
      * Draw filled background 
@@ -110,7 +128,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
     Paint backgroundPaint = new Paint();
     backgroundPaint.setColor(this.backgroundColor);
     backgroundPaint.setStyle(Paint.Style.FILL);
-    canvas.drawRoundRect(rect, this.borderRadius, this.borderRadius, backgroundPaint);
+    canvas.drawPath(path, backgroundPaint);
 
     /**
      * Draw border
@@ -120,6 +138,6 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
     borderPaint.setStyle(Paint.Style.STROKE);
     borderPaint.setStrokeWidth(this.borderWidth);
     borderPaint.setStrokeCap(Paint.Cap.ROUND);
-    canvas.drawRoundRect(rect, this.borderRadius, this.borderRadius, borderPaint);
+    canvas.drawPath(path, borderPaint);
   }
 }

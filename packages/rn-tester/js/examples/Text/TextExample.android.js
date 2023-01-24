@@ -902,21 +902,21 @@ class TextExample extends React.Component<{...}> {
         </RNTesterBlock>
         <RNTesterBlock title="Inline code-block">
           <View>
-            <Text>
+            <Text style={{lineHeight: 20}}>
               &nbsp;
               <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
                 &nbsp;This text.&nbsp;
               </Text>
             </Text>
 
-            <Text>
+            <Text style={{lineHeight: 20}}>
               Inline text example&nbsp;
               <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
                 &nbsp;This text.&nbsp;
               </Text>
             </Text>
 
-            <Text>
+            <Text style={{lineHeight: 20}}>
               Inline text example&nbsp;
               <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
                 &nbsp;This text should wrapped with a border and displayed
@@ -925,7 +925,7 @@ class TextExample extends React.Component<{...}> {
               </Text>
             </Text>
 
-            <Text>
+            <Text style={{lineHeight: 20}}>
               Inline text example&nbsp;
               <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
                 &nbsp;T histextshouldwrappedwithaborderanddisplayed inline. This
