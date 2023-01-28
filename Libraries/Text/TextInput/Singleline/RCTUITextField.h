@@ -9,6 +9,7 @@
 
 #import <React/RCTBackedTextInputViewProtocol.h>
 #import <React/RCTBackedTextInputDelegate.h>
+#import <React/RCTComponent.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) CGFloat zoomScale;
 @property (nonatomic, assign, readonly) CGPoint contentOffset;
 @property (nonatomic, assign, readonly) UIEdgeInsets contentInset;
+@property (nonatomic, copy, nullable) RCTDirectEventBlock onFilePaste;
 
 @end
 

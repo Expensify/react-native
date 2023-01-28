@@ -32,6 +32,10 @@
   return self;
 }
 
+- (void)setOnFilePaste:(RCTDirectEventBlock)onFilePaste {
+  _backedTextInputView.onFilePaste = onFilePaste;
+}
+
 - (id<RCTBackedTextInputViewProtocol>)backedTextInputView
 {
   return _backedTextInputView;
