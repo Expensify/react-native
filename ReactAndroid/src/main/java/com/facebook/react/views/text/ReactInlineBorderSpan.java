@@ -100,7 +100,11 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
    * Generate border radius for each line.
    */
   private float[] generateTextCorners(Canvas canvas, Paint paint, int left, int right, int top, int baseline, int bottom, CharSequence text, int start, int end, int lineNumber) {
-    if (lineNumber == 0) {
+    if (lineNumber == 0 && end >= effectiveEnd) {
+      return new float[]{this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius};
+    }
+
+    if (lineNumber == 0 && end <= effectiveEnd) {
       return new float[]{this.borderRadius, this.borderRadius, 0, 0, 0, 0, this.borderRadius, this.borderRadius};
     }
 
