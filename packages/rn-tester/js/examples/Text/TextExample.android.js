@@ -902,32 +902,32 @@ class TextExample extends React.Component<{...}> {
         </RNTesterBlock>
         <RNTesterBlock title="Inline code-block">
           <View>
-            <Text style={{lineHeight: 20}}>
+            <Text style={{lineHeight: 20, fontSize: 15}}>
               &nbsp;
-              <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+              <Text style={{color: '#fff', fontSize: 13}} textCodeBlock={textCodeBlock}>
                 &nbsp;This text.&nbsp;
               </Text>
             </Text>
 
-            <Text style={{lineHeight: 20}}>
+            <Text style={{lineHeight: 20, fontSize: 15}}>
               Inline text example&nbsp;
-              <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+              <Text style={{color: '#fff', fontSize: 13}} textCodeBlock={textCodeBlock}>
                 &nbsp;This text.&nbsp;
               </Text>
             </Text>
 
-            <Text style={{lineHeight: 20}}>
+            <Text style={{lineHeight: 20, fontSize: 15}}>
               Inline text example&nbsp;
-              <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+              <Text style={{color: '#fff', fontSize: 13}} textCodeBlock={textCodeBlock}>
                 &nbsp;This text should wrapped with a border and displayed
                 inline. This text should wrapped with a border and displayed
                 inline.&nbsp;
               </Text>
             </Text>
 
-            <Text style={{lineHeight: 20}}>
+            <Text style={{lineHeight: 20, fontSize: 15}}>
               Inline text example&nbsp;
-              <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+              <Text style={{color: '#fff', fontSize: 13}} textCodeBlock={textCodeBlock}>
                 &nbsp;T histextshouldwrappedwithaborderanddisplayed inline. This
                 text should wrapped with a border and displayed inline.&nbsp;
               </Text>

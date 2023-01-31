@@ -15,6 +15,7 @@ import android.graphics.RectF;
 import android.graphics.Color;
 import android.graphics.Path;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.uimanager.PixelUtil;
 
 /**
  * We use a custom {@link LineBackgroundSpan}, because RN Text component can't render borders. Details here:
@@ -42,7 +43,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
       this.borderColor = Color.parseColor(textCodeBlock.getString("borderColor"));
     }
     if (textCodeBlock.hasKey("borderRadius") && !textCodeBlock.isNull("borderRadius")) {
-      this.borderRadius = textCodeBlock.getInt("borderRadius") * 3;
+      this.borderRadius = (int) PixelUtil.toPixelFromDIP((float) textCodeBlock.getInt("borderRadius"));
     }
     if (textCodeBlock.hasKey("borderWidth") && !textCodeBlock.isNull("borderWidth")) {
       this.borderWidth = textCodeBlock.getInt("borderWidth");
@@ -74,12 +75,16 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
     int[] borderedTextRange = this.calculateBorderedTextCharRange(start, end);
     
     /**
+     * Set's RN Text size for the canvas to measure accurate metrics
      * Calculate bordered text's background layer position relative to the line.
      * 
      * e.g. given the line below
      * This is a prepended [this is bordered] text.
      */
+    paint.setTextSize(this.effectiveFontSize + PixelUtil.toPixelFromDIP(2));
     int prependedTextWidth = Math.round(paint.measureText(text, start, borderedTextRange[0]));
+    
+    paint.setTextSize(this.effectiveFontSize);
     int borderedTextWidth = Math.round(paint.measureText(text, borderedTextRange[0], borderedTextRange[1]));
 
     RectF rect = new RectF();
@@ -88,7 +93,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
      * Overflow offset to hide border radius on leading lines,
      * so that left border radius is only shown on first and right on last line.
      */
-    int offset = 10;
+    int offset = (int) PixelUtil.toPixelFromDIP(5f);
     int leftPosition = prependedTextWidth - (lineNumber == 0 ? 0 : offset);
     int rightPosition = prependedTextWidth + borderedTextWidth + (end < effectiveEnd ? offset : 0);
     rect.set(leftPosition, top + borderWidth / 2, rightPosition, bottom - borderWidth / 2);
@@ -120,11 +125,6 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
   public void drawBackground(Canvas canvas, Paint paint, int left, int right, int top, int baseline, int bottom, CharSequence text, int start, int end, int lineNumber) {
     float[] corners = generateTextCorners(canvas, paint, left, right, top, baseline, bottom, text, start, end, lineNumber);
     final Path path = new Path();
-
-    /**
-     * Set's RN Text size for the canvas to measure accurate metrics
-     */
-    paint.setTextSize(this.effectiveFontSize);
 
     RectF rect = generateTextBounds(canvas, paint, left, right, top, baseline, bottom, text, start, end, lineNumber);
     path.addRoundRect(rect, corners, Path.Direction.CW);
