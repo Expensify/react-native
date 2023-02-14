@@ -196,6 +196,9 @@ public class TextLayoutManagerMapBuffer {
               new SetSpanOperation(
                   start, end, new CustomLineHeightSpan(textAttributes.getEffectiveLineHeight())));
         }
+        if (textAttributes.getTextCodeBlock() != null) {
+          ops.add(new SetSpanOperation(start, end, new ReactInlineBorderSpan(textAttributes.mFontSize, start, end, textAttributes.getTextCodeBlock())));
+        }
 
         ops.add(new SetSpanOperation(start, end, new ReactTagSpan(reactTag)));
       }

@@ -9,6 +9,7 @@
 
 #import "NSTextStorage+FontScaling.h"
 #import "RCTAttributedTextUtils.h"
+#import "RCTTextCodeBlock.h"
 
 #import <React/RCTUtils.h>
 #import <react/utils/ManagedObjectWrapper.h>
@@ -182,7 +183,7 @@ static NSLineBreakMode RCTNSLineBreakModeFromEllipsizeMode(EllipsizeMode ellipsi
       : NSLineBreakByClipping;
   textContainer.maximumNumberOfLines = paragraphAttributes.maximumNumberOfLines;
 
-  NSLayoutManager *layoutManager = [NSLayoutManager new];
+  NSLayoutManager *layoutManager = [RCTTextCodeBlock new];
   layoutManager.usesFontLeading = NO;
   [layoutManager addTextContainer:textContainer];
 
