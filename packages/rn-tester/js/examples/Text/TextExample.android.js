@@ -929,6 +929,14 @@ class TextExample extends React.Component<{...}> {
                 inline. This text should wrapped with a border and displayed
                 inline.&nbsp;
               </Text>
+              &nbsp; Inline text example &nbsp;
+              <Text
+                style={{color: '#fff', fontSize: 13}}
+                textCodeBlock={textCodeBlock}>
+                &nbsp;This text should wrapped with a border and displayed
+                inline. This text should wrapped with a border and displayed
+                inline.&nbsp;
+              </Text>
             </Text>
 
             <Text style={{lineHeight: 20, fontSize: 15}}>

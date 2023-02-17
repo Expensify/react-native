@@ -1314,6 +1314,11 @@ exports.examples = [
               &nbsp;This text should wrapped with a border and displayed inline.
               This text should wrapped with a border and displayed inline.&nbsp;
             </Text>
+            &nbsp;Inline text example&nbsp;
+            <Text style={{color: '#fff'}} textCodeBlock={textCodeBlock}>
+              &nbsp;This text should wrapped with a border and displayed inline.
+              This text should wrapped with a border and displayed inline.&nbsp;
+            </Text>
           </Text>
 
           <Text style={{lineHeight: 20}}>

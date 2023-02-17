@@ -62,8 +62,8 @@
                                      inTextContainer:textContainer
                                           usingBlock:^(CGRect enclosingRect, __unused BOOL *anotherStop) {
             
-            BOOL isFirstLine = lineGlyphRange.location == 0;
-            BOOL isLastLine = range.length + range.location == lineGlyphRange.length + lineGlyphRange.location;
+            BOOL isFirstLine = range.location >= lineGlyphRange.location;
+            BOOL isLastLine = range.length + range.location <= lineGlyphRange.length + lineGlyphRange.location;
             long corners = (
               (isFirstLine ? (UIRectCornerTopLeft | UIRectCornerBottomLeft) : 0) |
               (isLastLine ? (UIRectCornerTopRight | UIRectCornerBottomRight) : 0)

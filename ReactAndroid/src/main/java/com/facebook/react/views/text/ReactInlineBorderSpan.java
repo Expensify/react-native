@@ -109,7 +109,7 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
       return new float[]{this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius, this.borderRadius};
     }
 
-    if (lineNumber == 0 && end <= effectiveEnd) {
+    if (start <= effectiveStart && end <= effectiveEnd) {
       return new float[]{this.borderRadius, this.borderRadius, 0, 0, 0, 0, this.borderRadius, this.borderRadius};
     }
 
