@@ -288,15 +288,15 @@ NSDictionary<NSAttributedStringKey, id> *RCTNSTextAttributesFromTextAttributes(T
     attributes[RCTAttributedStringIsHighlightedAttributeName] = @YES;
   }
 
-  if (textAttributes.textCodeBlock) {
-    NSString *backgroundColor = [NSString stringWithCString:textAttributes.textCodeBlock.value().backgroundColor.c_str() encoding:NSUTF8StringEncoding];
-    NSString *borderColor = [NSString stringWithCString:textAttributes.textCodeBlock.value().borderColor.c_str() encoding:NSUTF8StringEncoding];
+  if (textAttributes.textCodeBlockStyle) {
+    NSString *backgroundColor = [NSString stringWithCString:textAttributes.textCodeBlockStyle.value().backgroundColor.c_str() encoding:NSUTF8StringEncoding];
+    NSString *borderColor = [NSString stringWithCString:textAttributes.textCodeBlockStyle.value().borderColor.c_str() encoding:NSUTF8StringEncoding];
 
-    attributes[RCTTextAttributesIsTextCodeBlockAttributeName] = @{
+    attributes[RCTTextAttributesIsTextCodeBlockStyleAttributeName] = @{
       @"backgroundColor": backgroundColor,
       @"borderColor": borderColor,
-      @"borderWidth": @(textAttributes.textCodeBlock.value().borderWidth),
-      @"borderRadius": @(textAttributes.textCodeBlock.value().borderRadius),
+      @"borderWidth": @(textAttributes.textCodeBlockStyle.value().borderWidth),
+      @"borderRadius": @(textAttributes.textCodeBlockStyle.value().borderRadius),
     };
   }
 

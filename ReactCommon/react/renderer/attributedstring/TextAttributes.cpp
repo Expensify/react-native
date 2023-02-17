@@ -101,9 +101,9 @@ void TextAttributes::apply(TextAttributes textAttributes) {
   accessibilityRole = textAttributes.accessibilityRole.has_value()
       ? textAttributes.accessibilityRole
       : accessibilityRole;
-  textCodeBlock = textAttributes.textCodeBlock.has_value()
-      ? textAttributes.textCodeBlock
-      : textCodeBlock;
+  textCodeBlockStyle = textAttributes.textCodeBlockStyle.has_value()
+      ? textAttributes.textCodeBlockStyle
+      : textCodeBlockStyle;
 }
 
 #pragma mark - Operators
@@ -129,7 +129,7 @@ bool TextAttributes::operator==(const TextAttributes &rhs) const {
              isHighlighted,
              layoutDirection,
              accessibilityRole,
-             textCodeBlock,
+             textCodeBlockStyle,
              textTransform) ==
       std::tie(
              rhs.foregroundColor,
@@ -151,7 +151,7 @@ bool TextAttributes::operator==(const TextAttributes &rhs) const {
              rhs.isHighlighted,
              rhs.layoutDirection,
              rhs.accessibilityRole,
-             rhs.textCodeBlock,
+             rhs.textCodeBlockStyle,
              rhs.textTransform) &&
       floatEquality(opacity, rhs.opacity) &&
       floatEquality(fontSize, rhs.fontSize) &&
@@ -220,7 +220,7 @@ SharedDebugStringConvertibleList TextAttributes::getDebugProps() const {
       debugStringConvertibleItem("isHighlighted", isHighlighted),
       debugStringConvertibleItem("layoutDirection", layoutDirection),
       debugStringConvertibleItem("accessibilityRole", accessibilityRole),
-      debugStringConvertibleItem("textCodeBlock", textCodeBlock),
+      debugStringConvertibleItem("textCodeBlockStyle", textCodeBlockStyle),
   };
 }
 #endif

@@ -30,7 +30,7 @@ public class TextAttributes {
   private float mMaxFontSizeMultiplier = Float.NaN;
   private float mHeightOfTallestInlineViewOrImage = Float.NaN;
   private TextTransform mTextTransform = TextTransform.UNSET;
-  private ReadableMap mTextCodeBlock;
+  private ReadableMap mTextCodeBlockStyle;
 
   public TextAttributes() {}
 
@@ -55,7 +55,7 @@ public class TextAttributes {
             : mHeightOfTallestInlineViewOrImage;
     result.mTextTransform =
         child.mTextTransform != TextTransform.UNSET ? child.mTextTransform : mTextTransform;
-    result.mTextCodeBlock = child.mTextCodeBlock;
+    result.mTextCodeBlockStyle = child.mTextCodeBlockStyle;
 
     return result;
   }
@@ -176,12 +176,12 @@ public class TextAttributes {
         : DEFAULT_MAX_FONT_SIZE_MULTIPLIER;
   }
 
-  public ReadableMap getTextCodeBlock() {
-    return mTextCodeBlock;
+  public ReadableMap getTextCodeBlockStyle() {
+    return mTextCodeBlockStyle;
   }
 
-  public void setTextCodeBlock(ReadableMap textCodeBlock) {
-    mTextCodeBlock = textCodeBlock;
+  public void setTextCodeBlockStyle(ReadableMap textCodeBlockStyle) {
+    mTextCodeBlockStyle = textCodeBlockStyle;
   }
 
   public String toString() {
@@ -208,8 +208,8 @@ public class TextAttributes {
         + getMaxFontSizeMultiplier()
         + "\n  getEffectiveMaxFontSizeMultiplier(): "
         + getEffectiveMaxFontSizeMultiplier()
-        + "\n  getTextCodeBlock(): "
-        + getTextCodeBlock()
+        + "\n  getTextCodeBlockStyle(): "
+        + getTextCodeBlockStyle()
         + "\n}");
   }
 }

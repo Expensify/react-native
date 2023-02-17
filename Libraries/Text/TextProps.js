@@ -24,7 +24,7 @@ import type {
   PressEvent,
   TextLayoutEvent,
 } from '../Types/CoreEventTypes';
-import type {TextCodeBlockProp} from './TextCodeBlock';
+import type {TextCodeBlockStyleProp} from './TextCodeBlockStyle';
 import type {Node} from 'react';
 
 export type PressRetentionOffset = $ReadOnly<{|
@@ -273,5 +273,5 @@ export type TextProps = $ReadOnly<{|
    *
    * See https://github.com/Expensify/App/issues/4733
    */
-  textCodeBlock?: ?TextCodeBlockProp,
+  textCodeBlockStyle?: ?TextCodeBlockStyleProp,
 |}>;

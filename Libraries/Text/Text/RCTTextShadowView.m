@@ -14,7 +14,7 @@
 
 #import <React/RCTTextView.h>
 #import "NSTextStorage+FontScaling.h"
-#import "RCTTextCodeBlock.h"
+#import "RCTTextCodeBlockStyle.h"
 
 @implementation RCTTextShadowView {
   __weak RCTBridge *_bridge;
@@ -220,7 +220,7 @@
   textContainer.lineBreakMode = _maximumNumberOfLines > 0 ? _lineBreakMode : NSLineBreakByClipping;
   textContainer.maximumNumberOfLines = _maximumNumberOfLines;
 
-  NSLayoutManager *layoutManager = [RCTTextCodeBlock new];
+  NSLayoutManager *layoutManager = [RCTTextCodeBlockStyle new];
   layoutManager.usesFontLeading = NO;
   [layoutManager addTextContainer:textContainer];
 

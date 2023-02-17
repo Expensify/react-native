@@ -35,7 +35,7 @@ const UIView = {
   collapsable: true,
   needsOffscreenAlphaCompositing: true,
   style: ReactNativeStyleAttributes,
-  textCodeBlock: true,
+  textCodeBlockStyle: true,
 };
 
 const RCTView = {

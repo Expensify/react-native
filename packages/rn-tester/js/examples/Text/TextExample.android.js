@@ -906,7 +906,7 @@ class TextExample extends React.Component<{...}> {
               &nbsp;
               <Text
                 style={{color: '#fff', fontSize: 13}}
-                textCodeBlock={textCodeBlock}>
+                textCodeBlockStyle={textCodeBlockStyle}>
                 &nbsp;This text.&nbsp;
               </Text>
             </Text>
@@ -915,7 +915,7 @@ class TextExample extends React.Component<{...}> {
               Inline text example&nbsp;
               <Text
                 style={{color: '#fff', fontSize: 13}}
-                textCodeBlock={textCodeBlock}>
+                textCodeBlockStyle={textCodeBlockStyle}>
                 &nbsp;This text.&nbsp;
               </Text>
             </Text>
@@ -924,7 +924,7 @@ class TextExample extends React.Component<{...}> {
               Inline text example&nbsp;
               <Text
                 style={{color: '#fff', fontSize: 13}}
-                textCodeBlock={textCodeBlock}>
+                textCodeBlockStyle={textCodeBlockStyle}>
                 &nbsp;This text should wrapped with a border and displayed
                 inline. This text should wrapped with a border and displayed
                 inline.&nbsp;
@@ -932,7 +932,7 @@ class TextExample extends React.Component<{...}> {
               &nbsp; Inline text example &nbsp;
               <Text
                 style={{color: '#fff', fontSize: 13}}
-                textCodeBlock={textCodeBlock}>
+                textCodeBlockStyle={textCodeBlockStyle}>
                 &nbsp;This text should wrapped with a border and displayed
                 inline. This text should wrapped with a border and displayed
                 inline.&nbsp;
@@ -943,7 +943,7 @@ class TextExample extends React.Component<{...}> {
               Inline text example&nbsp;
               <Text
                 style={{color: '#fff', fontSize: 13}}
-                textCodeBlock={textCodeBlock}>
+                textCodeBlockStyle={textCodeBlockStyle}>
                 &nbsp;T histextshouldwrappedwithaborderanddisplayed inline. This
                 text should wrapped with a border and displayed inline.&nbsp;
               </Text>
@@ -955,7 +955,7 @@ class TextExample extends React.Component<{...}> {
   }
 }
 
-const textCodeBlock = {
+const textCodeBlockStyle = {
   backgroundColor: '#002E22',
   borderColor: '#1B5744',
   borderRadius: 4,

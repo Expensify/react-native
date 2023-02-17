@@ -159,7 +159,7 @@ public class ViewProps {
   public static final String ACCESSIBILITY_VALUE = "accessibilityValue";
   public static final String ACCESSIBILITY_LABELLED_BY = "accessibilityLabelledBy";
   public static final String IMPORTANT_FOR_ACCESSIBILITY = "importantForAccessibility";
-  public static final String TEXT_CODE_BLOCK = "textCodeBlock";
+  public static final String TEXT_CODE_BLOCK = "textCodeBlockStyle";
 
   // DEPRECATED
   public static final String ROTATION = "rotation";

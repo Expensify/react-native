@@ -93,7 +93,7 @@ public class TextAttributeProps {
   protected float mLineHeightInput = UNSET;
   protected float mLetterSpacingInput = Float.NaN;
   protected int mTextAlign = Gravity.NO_GRAVITY;
-  protected ReadableMap mTextCodeBlock;
+  protected ReadableMap mTextCodeBlockStyle;
 
   // `UNSET` is -1 and is the same as `LayoutDirection.UNDEFINED` but the symbol isn't available.
   protected int mLayoutDirection = UNSET;
@@ -215,7 +215,7 @@ public class TextAttributeProps {
           result.setAccessibilityRole(entry.getStringValue());
           break;
         case TA_KEY_TEXT_CODE_BLOCK:
-          result.setTextCodeBlock(entry.getMapBufferValue());
+          result.setTextCodeBlockStyle(entry.getMapBufferValue());
           break;
       }
     }
@@ -258,7 +258,7 @@ public class TextAttributeProps {
     result.setTextTransform(getStringProp(props, PROP_TEXT_TRANSFORM));
     result.setLayoutDirection(getStringProp(props, ViewProps.LAYOUT_DIRECTION));
     result.setAccessibilityRole(getStringProp(props, ViewProps.ACCESSIBILITY_ROLE));
-    result.setTextCodeBlock(getReadableMapProp(props, ViewProps.TEXT_CODE_BLOCK));
+    result.setTextCodeBlockStyle(getReadableMapProp(props, ViewProps.TEXT_CODE_BLOCK));
     return result;
   }
 
@@ -595,12 +595,12 @@ public class TextAttributeProps {
     mLayoutDirection = getLayoutDirection(layoutDirection);
   }
 
-  public ReadableMap getTextCodeBlock() {
-    return mTextCodeBlock;
+  public ReadableMap getTextCodeBlockStyle() {
+    return mTextCodeBlockStyle;
   }
 
-  private void setTextCodeBlock(@Nullable MapBuffer textCodeBlock) {
-    Iterator<MapBuffer.Entry> iterator = textCodeBlock.iterator();
+  private void setTextCodeBlockStyle(@Nullable MapBuffer textCodeBlockStyle) {
+    Iterator<MapBuffer.Entry> iterator = textCodeBlockStyle.iterator();
     WritableMap result = new WritableNativeMap();
 
     while (iterator.hasNext()) {
@@ -621,11 +621,11 @@ public class TextAttributeProps {
       }
     }
 
-    mTextCodeBlock = result;
+    mTextCodeBlockStyle = result;
   }
 
-  private void setTextCodeBlock(ReadableMap textCodeBlock) {
-    mTextCodeBlock = textCodeBlock;
+  private void setTextCodeBlockStyle(ReadableMap textCodeBlockStyle) {
+    mTextCodeBlockStyle = textCodeBlockStyle;
   }
 
   private void setTextShadowRadius(float textShadowRadius) {

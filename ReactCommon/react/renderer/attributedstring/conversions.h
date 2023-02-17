@@ -281,17 +281,17 @@ inline void fromRawValue(
   result = FontStyle::Normal;
 }
 
-inline std::string toString(const TextCodeBlockStruct &textCodeBlockStruct) {
-  return "{backgroundColor: " + folly::to<std::string>(textCodeBlockStruct.backgroundColor) +
-      ", borderRadius: " + folly::to<std::string>(textCodeBlockStruct.borderRadius) +
-      ", borderWidth: " + folly::to<std::string>(textCodeBlockStruct.borderWidth) +
-      ", borderColor: " + folly::to<std::string>(textCodeBlockStruct.borderColor) + "}";
+inline std::string toString(const TextCodeBlockStyleStruct &textCodeBlockStyleStruct) {
+  return "{backgroundColor: " + folly::to<std::string>(textCodeBlockStyleStruct.backgroundColor) +
+      ", borderRadius: " + folly::to<std::string>(textCodeBlockStyleStruct.borderRadius) +
+      ", borderWidth: " + folly::to<std::string>(textCodeBlockStyleStruct.borderWidth) +
+      ", borderColor: " + folly::to<std::string>(textCodeBlockStyleStruct.borderColor) + "}";
 }
 
 inline void fromRawValue(
     const PropsParserContext &context,
     const RawValue &value,
-    TextCodeBlockStruct &result) {
+    TextCodeBlockStyleStruct &result) {
   auto map = (butter::map<std::string, RawValue>)value;
 
   auto backgroundColor = map.find("backgroundColor");
@@ -946,25 +946,25 @@ inline void fromRawValue(
   }
 }
 
-inline folly::dynamic toDynamic(const TextCodeBlockStruct &textCodeBlockStruct) {
-  auto _textCodeBlockStruct = folly::dynamic::object();
-  if (!textCodeBlockStruct.backgroundColor.empty()) {
-    _textCodeBlockStruct(
-        "backgroundColor", toString(textCodeBlockStruct.backgroundColor));
+inline folly::dynamic toDynamic(const TextCodeBlockStyleStruct &textCodeBlockStyleStruct) {
+  auto _textCodeBlockStyleStruct = folly::dynamic::object();
+  if (!textCodeBlockStyleStruct.backgroundColor.empty()) {
+    _textCodeBlockStyleStruct(
+        "backgroundColor", toString(textCodeBlockStyleStruct.backgroundColor));
   }
-  if (!textCodeBlockStruct.borderColor.empty()) {
-    _textCodeBlockStruct(
-        "borderColor", toString(textCodeBlockStruct.borderColor));
+  if (!textCodeBlockStyleStruct.borderColor.empty()) {
+    _textCodeBlockStyleStruct(
+        "borderColor", toString(textCodeBlockStyleStruct.borderColor));
   }
-  if (!std::isnan(textCodeBlockStruct.borderRadius)) {
-    _textCodeBlockStruct(
-        "borderRadius", textCodeBlockStruct.borderRadius);
+  if (!std::isnan(textCodeBlockStyleStruct.borderRadius)) {
+    _textCodeBlockStyleStruct(
+        "borderRadius", textCodeBlockStyleStruct.borderRadius);
   }
-  if (!std::isnan(textCodeBlockStruct.borderWidth)) {
-    _textCodeBlockStruct(
-        "borderWidth", textCodeBlockStruct.borderWidth);
+  if (!std::isnan(textCodeBlockStyleStruct.borderWidth)) {
+    _textCodeBlockStyleStruct(
+        "borderWidth", textCodeBlockStyleStruct.borderWidth);
   }
-  return _textCodeBlockStruct;
+  return _textCodeBlockStyleStruct;
 }
 
 inline std::string toString(AttributedString::Range const &range) {
@@ -979,19 +979,19 @@ constexpr static MapBuffer::Key TCB_KEY_BORDER_COLOR = 1;
 constexpr static MapBuffer::Key TCB_KEY_BORDER_RADIUS = 2;
 constexpr static MapBuffer::Key TCB_KEY_BORDER_WIDTH = 3;
 
-inline MapBuffer toMapBuffer(const TextCodeBlockStruct &textCodeBlockStruct) {
+inline MapBuffer toMapBuffer(const TextCodeBlockStyleStruct &textCodeBlockStyleStruct) {
   auto builder = MapBufferBuilder();
-  if (!textCodeBlockStruct.backgroundColor.empty()) {
-    builder.putString(TCB_KEY_BACKGROUND_COLOR, textCodeBlockStruct.backgroundColor);
+  if (!textCodeBlockStyleStruct.backgroundColor.empty()) {
+    builder.putString(TCB_KEY_BACKGROUND_COLOR, textCodeBlockStyleStruct.backgroundColor);
   }
-  if (!textCodeBlockStruct.borderColor.empty()) {
-    builder.putString(TCB_KEY_BORDER_COLOR, textCodeBlockStruct.borderColor);
+  if (!textCodeBlockStyleStruct.borderColor.empty()) {
+    builder.putString(TCB_KEY_BORDER_COLOR, textCodeBlockStyleStruct.borderColor);
   }
-  if (!std::isnan(textCodeBlockStruct.borderRadius)) {
-    builder.putInt(TCB_KEY_BORDER_RADIUS, textCodeBlockStruct.borderRadius);
+  if (!std::isnan(textCodeBlockStyleStruct.borderRadius)) {
+    builder.putInt(TCB_KEY_BORDER_RADIUS, textCodeBlockStyleStruct.borderRadius);
   }
-  if (!std::isnan(textCodeBlockStruct.borderWidth)) {
-    builder.putInt(TCB_KEY_BORDER_WIDTH, textCodeBlockStruct.borderWidth);
+  if (!std::isnan(textCodeBlockStyleStruct.borderWidth)) {
+    builder.putInt(TCB_KEY_BORDER_WIDTH, textCodeBlockStyleStruct.borderWidth);
   }
   return builder.build();
 }
@@ -1122,9 +1122,9 @@ inline folly::dynamic toDynamic(const TextAttributes &textAttributes) {
     _textAttributes(
         "accessibilityRole", toString(*textAttributes.accessibilityRole));
   }
-  if (textAttributes.textCodeBlock.has_value()) {
+  if (textAttributes.textCodeBlockStyle.has_value()) {
     _textAttributes(
-        "textCodeBlock", toDynamic(*textAttributes.textCodeBlock));
+        "textCodeBlockStyle", toDynamic(*textAttributes.textCodeBlockStyle));
   }
   return _textAttributes;
 }
@@ -1348,9 +1348,9 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
     builder.putString(
         TA_KEY_ACCESSIBILITY_ROLE, toString(*textAttributes.accessibilityRole));
   }
-  if (textAttributes.textCodeBlock.has_value()) {
+  if (textAttributes.textCodeBlockStyle.has_value()) {
     builder.putMapBuffer(
-        TA_KEY_TEXT_CODE_BLOCK, toMapBuffer(*textAttributes.textCodeBlock));
+        TA_KEY_TEXT_CODE_BLOCK, toMapBuffer(*textAttributes.textCodeBlockStyle));
   }
   return builder.build();
 }

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "RCTTextCodeBlock.h"
+#import "RCTTextCodeBlockStyle.h"
 #import "RCTTextAttributes.h"
 
-@implementation RCTTextCodeBlock
+@implementation RCTTextCodeBlockStyle
 
 - (UIColor*)hexStringToColor:(NSString *)stringToConvert
 {
@@ -31,15 +31,15 @@
       return;
     }
   
-    [[self textStorage] enumerateAttribute:RCTTextAttributesIsTextCodeBlockAttributeName
+    [[self textStorage] enumerateAttribute:RCTTextAttributesIsTextCodeBlockStyleAttributeName
                                     inRange:glyphsToShow
                                     options:0
-                                 usingBlock:^(NSDictionary *textCodeBlock, NSRange range, __unused BOOL *stop) {
+                                 usingBlock:^(NSDictionary *textCodeBlockStyle, NSRange range, __unused BOOL *stop) {
 
-      NSString *backgroundColor = [textCodeBlock objectForKey:@"backgroundColor"];
-      NSString *borderColor = [textCodeBlock objectForKey:@"borderColor"];
-      float borderRadius = [[textCodeBlock objectForKey:@"borderRadius"] floatValue];
-      float borderWidth = [[textCodeBlock objectForKey:@"borderWidth"] floatValue];
+      NSString *backgroundColor = [textCodeBlockStyle objectForKey:@"backgroundColor"];
+      NSString *borderColor = [textCodeBlockStyle objectForKey:@"borderColor"];
+      float borderRadius = [[textCodeBlockStyle objectForKey:@"borderRadius"] floatValue];
+      float borderWidth = [[textCodeBlockStyle objectForKey:@"borderWidth"] floatValue];
       
       CGContextRef context = UIGraphicsGetCurrentContext();
       CGContextSetFillColorWithColor(context, [self hexStringToColor:backgroundColor].CGColor);
@@ -53,7 +53,7 @@
       [self enumerateLineFragmentsForGlyphRange:range
                                      usingBlock:^(CGRect rect, CGRect usedRect, NSTextContainer * _Nonnull textContainer, NSRange lineGlyphRange, BOOL * _Nonnull stop) {
         
-          __block UIBezierPath *textCodeBlockPath = nil;
+          __block UIBezierPath *textCodeBlockStylePath = nil;
 
           NSRange lineRange = NSIntersectionRange(range, lineGlyphRange);
         
@@ -78,15 +78,15 @@
 
             UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:resultRect byRoundingCorners:corners cornerRadii:CGSizeMake(borderRadius, borderRadius)];
 
-              if (textCodeBlockPath) {
-                [textCodeBlockPath appendPath:path];
+              if (textCodeBlockStylePath) {
+                [textCodeBlockStylePath appendPath:path];
               } else {
-                textCodeBlockPath = path;
+                textCodeBlockStylePath = path;
               }
               
-              textCodeBlockPath.lineWidth = borderWidth;
-              [textCodeBlockPath stroke];
-              [textCodeBlockPath fill];
+              textCodeBlockStylePath.lineWidth = borderWidth;
+              [textCodeBlockStylePath stroke];
+              [textCodeBlockStylePath fill];
           }];
       }];
       

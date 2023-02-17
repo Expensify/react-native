@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RCTTextCodeBlock : NSLayoutManager
+@interface RCTTextCodeBlockStyle : NSLayoutManager
 
 @end
 

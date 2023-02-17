@@ -31,22 +31,22 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
   private int borderRadius;
   private int borderWidth;
 
-  public ReactInlineBorderSpan(int effectiveFontSize, int effectiveStart, int effectiveEnd, ReadableMap textCodeBlock) {
+  public ReactInlineBorderSpan(int effectiveFontSize, int effectiveStart, int effectiveEnd, ReadableMap textCodeBlockStyle) {
     this.effectiveFontSize = effectiveFontSize;
     this.effectiveStart = effectiveStart;
     this.effectiveEnd = effectiveEnd;
     
-    if (textCodeBlock.hasKey("backgroundColor") && !textCodeBlock.isNull("backgroundColor")) {
-      this.backgroundColor = Color.parseColor(textCodeBlock.getString("backgroundColor"));
+    if (textCodeBlockStyle.hasKey("backgroundColor") && !textCodeBlockStyle.isNull("backgroundColor")) {
+      this.backgroundColor = Color.parseColor(textCodeBlockStyle.getString("backgroundColor"));
     }
-    if (textCodeBlock.hasKey("borderColor") && !textCodeBlock.isNull("borderColor")) {
-      this.borderColor = Color.parseColor(textCodeBlock.getString("borderColor"));
+    if (textCodeBlockStyle.hasKey("borderColor") && !textCodeBlockStyle.isNull("borderColor")) {
+      this.borderColor = Color.parseColor(textCodeBlockStyle.getString("borderColor"));
     }
-    if (textCodeBlock.hasKey("borderRadius") && !textCodeBlock.isNull("borderRadius")) {
-      this.borderRadius = (int) PixelUtil.toPixelFromDIP((float) textCodeBlock.getInt("borderRadius"));
+    if (textCodeBlockStyle.hasKey("borderRadius") && !textCodeBlockStyle.isNull("borderRadius")) {
+      this.borderRadius = (int) PixelUtil.toPixelFromDIP((float) textCodeBlockStyle.getInt("borderRadius"));
     }
-    if (textCodeBlock.hasKey("borderWidth") && !textCodeBlock.isNull("borderWidth")) {
-      this.borderWidth = textCodeBlock.getInt("borderWidth");
+    if (textCodeBlockStyle.hasKey("borderWidth") && !textCodeBlockStyle.isNull("borderWidth")) {
+      this.borderWidth = textCodeBlockStyle.getInt("borderWidth");
     }
   }
 

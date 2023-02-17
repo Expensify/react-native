@@ -10,7 +10,7 @@
 
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
-export type TextCodeBlockProp = $ReadOnly<{|
+export type TextCodeBlockStyleProp = $ReadOnly<{|
   /**
    * The background color of the text code block.
    */

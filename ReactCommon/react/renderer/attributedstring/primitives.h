@@ -137,7 +137,7 @@ enum class AccessibilityRole {
   Toolbar,
 };
 
-struct TextCodeBlockStruct {
+struct TextCodeBlockStyleStruct {
   std::string backgroundColor;
   std::string borderColor;
   int borderRadius;
@@ -145,14 +145,14 @@ struct TextCodeBlockStruct {
 };
 
 inline bool operator==(
-    const TextCodeBlockStruct &lhs,
-    const TextCodeBlockStruct &rhs) {
+    const TextCodeBlockStyleStruct &lhs,
+    const TextCodeBlockStyleStruct &rhs) {
   return false;
 }
 
 inline bool operator!=(
-    const TextCodeBlockStruct &lhs,
-    const TextCodeBlockStruct &rhs) {
+    const TextCodeBlockStyleStruct &lhs,
+    const TextCodeBlockStyleStruct &rhs) {
   return !(lhs == rhs);
 }
 
@@ -245,14 +245,14 @@ struct hash<facebook::react::TextBreakStrategy> {
 };
 
 template <>
-struct hash<facebook::react::TextCodeBlockStruct> {
+struct hash<facebook::react::TextCodeBlockStyleStruct> {
   size_t operator()(
-      const facebook::react::TextCodeBlockStruct &textCodeBlockStruct) const {
+      const facebook::react::TextCodeBlockStyleStruct &textCodeBlockStyleStruct) const {
     return folly::hash::hash_combine(
-        textCodeBlockStruct.backgroundColor,
-        textCodeBlockStruct.borderColor,
-        textCodeBlockStruct.borderRadius,
-        textCodeBlockStruct.borderWidth
+        textCodeBlockStyleStruct.backgroundColor,
+        textCodeBlockStyleStruct.borderColor,
+        textCodeBlockStyleStruct.borderRadius,
+        textCodeBlockStyleStruct.borderWidth
     );
   }
 };
