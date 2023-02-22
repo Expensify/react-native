@@ -40,6 +40,8 @@
       NSString *borderColor = [textCodeBlockStyle objectForKey:@"borderColor"];
       float borderRadius = [[textCodeBlockStyle objectForKey:@"borderRadius"] floatValue];
       float borderWidth = [[textCodeBlockStyle objectForKey:@"borderWidth"] floatValue];
+      float horizontalOffset = 5;
+      float verticalOffset = 2;
       
       CGContextRef context = UIGraphicsGetCurrentContext();
       CGContextSetFillColorWithColor(context, [self hexStringToColor:backgroundColor].CGColor);
@@ -72,8 +74,8 @@
             CGRect resultRect = CGRectMake(
               enclosingRect.origin.x,
               enclosingRect.origin.y + (borderWidth / 2),
-              enclosingRect.size.width + ((isFirstLine && isLastLine) || isLastLine ? 0 : 5),
-              enclosingRect.size.height - borderWidth
+              enclosingRect.size.width + ((isFirstLine && isLastLine) || isLastLine ? 0 : horizontalOffset),
+              enclosingRect.size.height - borderWidth - verticalOffset
             );
 
             UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:resultRect byRoundingCorners:corners cornerRadii:CGSizeMake(borderRadius, borderRadius)];

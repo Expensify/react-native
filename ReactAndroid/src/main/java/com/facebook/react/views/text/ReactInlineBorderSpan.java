@@ -93,10 +93,13 @@ public class ReactInlineBorderSpan implements LineBackgroundSpan, ReactSpan {
      * Overflow offset to hide border radius on leading lines,
      * so that left border radius is only shown on first and right on last line.
      */
-    int offset = (int) PixelUtil.toPixelFromDIP(5f);
-    int leftPosition = prependedTextWidth - (lineNumber == 0 ? 0 : offset);
-    int rightPosition = prependedTextWidth + borderedTextWidth + (end < effectiveEnd ? offset : 0);
-    rect.set(leftPosition, top + borderWidth / 2, rightPosition, bottom - borderWidth / 2);
+    int horizontalOffset = (int) PixelUtil.toPixelFromDIP(5f);
+    int verticalOffset = (int) PixelUtil.toPixelFromDIP(1f);
+    int topPosition = top + (borderWidth / 2) + verticalOffset;
+    int bottomPosition = bottom - (borderWidth / 2) - verticalOffset;
+    int leftPosition = prependedTextWidth - (lineNumber == 0 ? 0 : horizontalOffset);
+    int rightPosition = prependedTextWidth + borderedTextWidth + (end < effectiveEnd ? horizontalOffset : 0);
+    rect.set(leftPosition, topPosition, rightPosition, bottomPosition);
 
     return rect;
   }
