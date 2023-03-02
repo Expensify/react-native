@@ -73,7 +73,7 @@
 
             CGRect resultRect = CGRectMake(
               enclosingRect.origin.x,
-              enclosingRect.origin.y + (borderWidth / 2),
+              enclosingRect.origin.y + (borderWidth / 2) + (verticalOffset / 2),
               enclosingRect.size.width + ((isFirstLine && isLastLine) || isLastLine ? 0 : horizontalOffset),
               enclosingRect.size.height - borderWidth - verticalOffset
             );
