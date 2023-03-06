@@ -73,9 +73,9 @@
 
             CGRect resultRect = CGRectMake(
               enclosingRect.origin.x,
-              enclosingRect.origin.y + (borderWidth / 2) + (verticalOffset / 2),
+              enclosingRect.origin.y + (borderWidth / 2) + verticalOffset,
               enclosingRect.size.width + ((isFirstLine && isLastLine) || isLastLine ? 0 : horizontalOffset),
-              enclosingRect.size.height - borderWidth - verticalOffset
+              enclosingRect.size.height - (borderWidth * 2)
             );
 
             UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:resultRect byRoundingCorners:corners cornerRadii:CGSizeMake(borderRadius, borderRadius)];
