@@ -288,6 +288,18 @@ NSDictionary<NSAttributedStringKey, id> *RCTNSTextAttributesFromTextAttributes(T
     attributes[RCTAttributedStringIsHighlightedAttributeName] = @YES;
   }
 
+  if (textAttributes.textCodeBlockStyle) {
+    NSString *backgroundColor = [NSString stringWithCString:textAttributes.textCodeBlockStyle.value().backgroundColor.c_str() encoding:NSUTF8StringEncoding];
+    NSString *borderColor = [NSString stringWithCString:textAttributes.textCodeBlockStyle.value().borderColor.c_str() encoding:NSUTF8StringEncoding];
+
+    attributes[RCTTextAttributesIsTextCodeBlockStyleAttributeName] = @{
+      @"backgroundColor": backgroundColor,
+      @"borderColor": borderColor,
+      @"borderWidth": @(textAttributes.textCodeBlockStyle.value().borderWidth),
+      @"borderRadius": @(textAttributes.textCodeBlockStyle.value().borderRadius),
+    };
+  }
+
   if (textAttributes.accessibilityRole.has_value()) {
     auto accessibilityRole = textAttributes.accessibilityRole.value();
     switch (accessibilityRole) {

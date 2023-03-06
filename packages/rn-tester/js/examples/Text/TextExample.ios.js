@@ -1284,6 +1284,65 @@ exports.examples = [
     },
   },
   {
+    title: 'Inline code-block',
+    render: function (): React.Node {
+      const textCodeBlockStyle = {
+        backgroundColor: '#002E22',
+        borderColor: '#1B5744',
+        borderRadius: 4,
+        borderWidth: 2,
+      };
+      return (
+        <View>
+          <Text style={{lineHeight: 20}}>
+            &nbsp;
+            <Text
+              style={{color: '#fff'}}
+              textCodeBlockStyle={textCodeBlockStyle}>
+              &nbsp;This text.&nbsp;
+            </Text>
+          </Text>
+
+          <Text style={{lineHeight: 20}}>
+            Inline text example&nbsp;
+            <Text
+              style={{color: '#fff'}}
+              textCodeBlockStyle={textCodeBlockStyle}>
+              &nbsp;This text.&nbsp;
+            </Text>
+          </Text>
+
+          <Text style={{lineHeight: 20}}>
+            Inline text example&nbsp;
+            <Text
+              style={{color: '#fff'}}
+              textCodeBlockStyle={textCodeBlockStyle}>
+              &nbsp;This text should wrapped with a border and displayed inline.
+              This text should wrapped with a border and displayed inline.&nbsp;
+            </Text>
+            &nbsp;Inline text example&nbsp;
+            <Text
+              style={{color: '#fff'}}
+              textCodeBlockStyle={textCodeBlockStyle}>
+              &nbsp;This text should wrapped with a border and displayed inline.
+              This text should wrapped with a border and displayed inline.&nbsp;
+            </Text>
+          </Text>
+
+          <Text style={{lineHeight: 20}}>
+            Inline text example&nbsp;
+            <Text
+              style={{color: '#fff'}}
+              textCodeBlockStyle={textCodeBlockStyle}>
+              &nbsp;T histextshouldwrappedwithaborderanddisplayed inline. This
+              text should wrapped with a border and displayed inline.&nbsp;
+            </Text>
+          </Text>
+        </View>
+      );
+    },
+  },
+  {
     title: 'Dynamic Type (iOS only)',
     render: function (): React.Node {
       const boldStyle = {fontWeight: 'bold'};

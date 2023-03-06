@@ -137,6 +137,25 @@ enum class AccessibilityRole {
   Toolbar,
 };
 
+struct TextCodeBlockStyleStruct {
+  std::string backgroundColor;
+  std::string borderColor;
+  int borderRadius;
+  int borderWidth;
+};
+
+inline bool operator==(
+    const TextCodeBlockStyleStruct &lhs,
+    const TextCodeBlockStyleStruct &rhs) {
+  return false;
+}
+
+inline bool operator!=(
+    const TextCodeBlockStyleStruct &lhs,
+    const TextCodeBlockStyleStruct &rhs) {
+  return !(lhs == rhs);
+}
+
 enum class TextTransform {
   None,
   Uppercase,
@@ -222,6 +241,19 @@ template <>
 struct hash<facebook::react::TextBreakStrategy> {
   size_t operator()(const facebook::react::TextBreakStrategy &v) const {
     return hash<int>()(static_cast<int>(v));
+  }
+};
+
+template <>
+struct hash<facebook::react::TextCodeBlockStyleStruct> {
+  size_t operator()(
+      const facebook::react::TextCodeBlockStyleStruct &textCodeBlockStyleStruct) const {
+    return folly::hash::hash_combine(
+        textCodeBlockStyleStruct.backgroundColor,
+        textCodeBlockStyleStruct.borderColor,
+        textCodeBlockStyleStruct.borderRadius,
+        textCodeBlockStyleStruct.borderWidth
+    );
   }
 };
 

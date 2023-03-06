@@ -281,6 +281,48 @@ inline void fromRawValue(
   result = FontStyle::Normal;
 }
 
+inline std::string toString(const TextCodeBlockStyleStruct &textCodeBlockStyleStruct) {
+  return "{backgroundColor: " + folly::to<std::string>(textCodeBlockStyleStruct.backgroundColor) +
+      ", borderRadius: " + folly::to<std::string>(textCodeBlockStyleStruct.borderRadius) +
+      ", borderWidth: " + folly::to<std::string>(textCodeBlockStyleStruct.borderWidth) +
+      ", borderColor: " + folly::to<std::string>(textCodeBlockStyleStruct.borderColor) + "}";
+}
+
+inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    TextCodeBlockStyleStruct &result) {
+  auto map = (butter::map<std::string, RawValue>)value;
+
+  auto backgroundColor = map.find("backgroundColor");
+  if (backgroundColor != map.end()) {
+    if (backgroundColor->second.hasType<std::string>()) {
+      result.backgroundColor = (std::string)backgroundColor->second;
+    }
+  }
+
+  auto borderColor = map.find("borderColor");
+  if (borderColor != map.end()) {
+    if (borderColor->second.hasType<std::string>()) {
+      result.borderColor = (std::string)borderColor->second;
+    }
+  }
+
+  auto borderRadius = map.find("borderRadius");
+  if (borderRadius != map.end()) {
+    if (borderRadius->second.hasType<int>()) {
+      result.borderRadius = (int)borderRadius->second;
+    }
+  }
+
+  auto borderWidth = map.find("borderWidth");
+  if (borderWidth != map.end()) {
+    if (borderWidth->second.hasType<int>()) {
+      result.borderWidth = (int)borderWidth->second;
+    }
+  }
+}
+
 inline std::string toString(const FontStyle &fontStyle) {
   switch (fontStyle) {
     case FontStyle::Normal:
@@ -904,12 +946,55 @@ inline void fromRawValue(
   }
 }
 
+inline folly::dynamic toDynamic(const TextCodeBlockStyleStruct &textCodeBlockStyleStruct) {
+  auto _textCodeBlockStyleStruct = folly::dynamic::object();
+  if (!textCodeBlockStyleStruct.backgroundColor.empty()) {
+    _textCodeBlockStyleStruct(
+        "backgroundColor", toString(textCodeBlockStyleStruct.backgroundColor));
+  }
+  if (!textCodeBlockStyleStruct.borderColor.empty()) {
+    _textCodeBlockStyleStruct(
+        "borderColor", toString(textCodeBlockStyleStruct.borderColor));
+  }
+  if (!std::isnan(textCodeBlockStyleStruct.borderRadius)) {
+    _textCodeBlockStyleStruct(
+        "borderRadius", textCodeBlockStyleStruct.borderRadius);
+  }
+  if (!std::isnan(textCodeBlockStyleStruct.borderWidth)) {
+    _textCodeBlockStyleStruct(
+        "borderWidth", textCodeBlockStyleStruct.borderWidth);
+  }
+  return _textCodeBlockStyleStruct;
+}
+
 inline std::string toString(AttributedString::Range const &range) {
   return "{location: " + folly::to<std::string>(range.location) +
       ", length: " + folly::to<std::string>(range.length) + "}";
 }
 
 #ifdef ANDROID
+
+constexpr static MapBuffer::Key TCB_KEY_BACKGROUND_COLOR = 0;
+constexpr static MapBuffer::Key TCB_KEY_BORDER_COLOR = 1;
+constexpr static MapBuffer::Key TCB_KEY_BORDER_RADIUS = 2;
+constexpr static MapBuffer::Key TCB_KEY_BORDER_WIDTH = 3;
+
+inline MapBuffer toMapBuffer(const TextCodeBlockStyleStruct &textCodeBlockStyleStruct) {
+  auto builder = MapBufferBuilder();
+  if (!textCodeBlockStyleStruct.backgroundColor.empty()) {
+    builder.putString(TCB_KEY_BACKGROUND_COLOR, textCodeBlockStyleStruct.backgroundColor);
+  }
+  if (!textCodeBlockStyleStruct.borderColor.empty()) {
+    builder.putString(TCB_KEY_BORDER_COLOR, textCodeBlockStyleStruct.borderColor);
+  }
+  if (!std::isnan(textCodeBlockStyleStruct.borderRadius)) {
+    builder.putInt(TCB_KEY_BORDER_RADIUS, textCodeBlockStyleStruct.borderRadius);
+  }
+  if (!std::isnan(textCodeBlockStyleStruct.borderWidth)) {
+    builder.putInt(TCB_KEY_BORDER_WIDTH, textCodeBlockStyleStruct.borderWidth);
+  }
+  return builder.build();
+}
 
 inline folly::dynamic toDynamic(
     const ParagraphAttributes &paragraphAttributes) {
@@ -1037,6 +1122,10 @@ inline folly::dynamic toDynamic(const TextAttributes &textAttributes) {
     _textAttributes(
         "accessibilityRole", toString(*textAttributes.accessibilityRole));
   }
+  if (textAttributes.textCodeBlockStyle.has_value()) {
+    _textAttributes(
+        "textCodeBlockStyle", toDynamic(*textAttributes.textCodeBlockStyle));
+  }
   return _textAttributes;
 }
 
@@ -1111,6 +1200,8 @@ constexpr static MapBuffer::Key TA_KEY_IS_HIGHLIGHTED = 20;
 constexpr static MapBuffer::Key TA_KEY_LAYOUT_DIRECTION = 21;
 constexpr static MapBuffer::Key TA_KEY_ACCESSIBILITY_ROLE = 22;
 constexpr static MapBuffer::Key TA_KEY_LINE_BREAK_STRATEGY = 23;
+
+constexpr static MapBuffer::Key TA_KEY_TEXT_CODE_BLOCK = 30;
 
 // constants for ParagraphAttributes serialization
 constexpr static MapBuffer::Key PA_KEY_MAX_NUMBER_OF_LINES = 0;
@@ -1256,6 +1347,10 @@ inline MapBuffer toMapBuffer(const TextAttributes &textAttributes) {
   if (textAttributes.accessibilityRole.has_value()) {
     builder.putString(
         TA_KEY_ACCESSIBILITY_ROLE, toString(*textAttributes.accessibilityRole));
+  }
+  if (textAttributes.textCodeBlockStyle.has_value()) {
+    builder.putMapBuffer(
+        TA_KEY_TEXT_CODE_BLOCK, toMapBuffer(*textAttributes.textCodeBlockStyle));
   }
   return builder.build();
 }

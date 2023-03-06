@@ -900,10 +900,68 @@ class TextExample extends React.Component<{...}> {
             employee@facebook.com
           </Text>
         </RNTesterBlock>
+        <RNTesterBlock title="Inline code-block">
+          <View>
+            <Text style={{lineHeight: 20, fontSize: 15}}>
+              &nbsp;
+              <Text
+                style={{color: '#fff', fontSize: 13}}
+                textCodeBlockStyle={textCodeBlockStyle}>
+                &nbsp;This text.&nbsp;
+              </Text>
+            </Text>
+
+            <Text style={{lineHeight: 20, fontSize: 15}}>
+              Inline text example&nbsp;
+              <Text
+                style={{color: '#fff', fontSize: 13}}
+                textCodeBlockStyle={textCodeBlockStyle}>
+                &nbsp;This text.&nbsp;
+              </Text>
+            </Text>
+
+            <Text style={{lineHeight: 20, fontSize: 15}}>
+              Inline text example&nbsp;
+              <Text
+                style={{color: '#fff', fontSize: 13}}
+                textCodeBlockStyle={textCodeBlockStyle}>
+                &nbsp;This text should wrapped with a border and displayed
+                inline. This text should wrapped with a border and displayed
+                inline.&nbsp;
+              </Text>
+              &nbsp; Inline text example &nbsp;
+              <Text
+                style={{color: '#fff', fontSize: 13}}
+                textCodeBlockStyle={textCodeBlockStyle}>
+                &nbsp;This text should wrapped with a border and displayed
+                inline. This text should wrapped with a border and displayed
+                inline.&nbsp;
+              </Text>
+            </Text>
+
+            <Text style={{lineHeight: 20, fontSize: 15}}>
+              Inline text example&nbsp;
+              <Text
+                style={{color: '#fff', fontSize: 13}}
+                textCodeBlockStyle={textCodeBlockStyle}>
+                &nbsp;T histextshouldwrappedwithaborderanddisplayed inline. This
+                text should wrapped with a border and displayed inline.&nbsp;
+              </Text>
+            </Text>
+          </View>
+        </RNTesterBlock>
       </RNTesterPage>
     );
   }
 }
+
+const textCodeBlockStyle = {
+  backgroundColor: '#002E22',
+  borderColor: '#1B5744',
+  borderRadius: 4,
+  borderWidth: 2,
+};
+
 const styles = StyleSheet.create({
   backgroundColorText: {
     left: 5,
