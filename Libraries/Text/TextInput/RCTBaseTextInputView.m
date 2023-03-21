@@ -176,7 +176,8 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
   id<RCTBackedTextInputViewProtocol> backedTextInputView = self.backedTextInputView;
   UITextRange *selectedTextRange = backedTextInputView.selectedTextRange;
   return [[RCTTextSelection new] initWithStart:[backedTextInputView offsetFromPosition:backedTextInputView.beginningOfDocument toPosition:selectedTextRange.start]
-                                           end:[backedTextInputView offsetFromPosition:backedTextInputView.beginningOfDocument toPosition:selectedTextRange.end]];
+                                           end:[backedTextInputView offsetFromPosition:backedTextInputView.beginningOfDocument toPosition:selectedTextRange.end]
+                                           cursorPosition:[backedTextInput caretRectForPosition:selectedTextRange.start].origin];
 }
 
 - (void)setSelection:(RCTTextSelection *)selection
@@ -491,10 +492,16 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
 
   RCTTextSelection *selection = self.selection;
 
+  UITextRange *selectedTextRange = self.backedTextInputView.selectedTextRange;
+  CGPoint selectionOrigin = [self.backedTextInputView caretRectForPosition:selectedTextRange.start].origin;
+
+
   _onSelectionChange(@{
     @"selection": @{
       @"start": @(selection.start),
       @"end": @(selection.end),
+      @"positionY": @(selectionOrigin.y),
+      @"positionX": @(selectionOrigin.x),
     },
   });
 }
