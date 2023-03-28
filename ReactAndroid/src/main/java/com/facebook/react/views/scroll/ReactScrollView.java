@@ -1052,6 +1052,10 @@ public class ReactScrollView extends ScrollView
    */
   @Override
   public void scrollTo(int x, int y) {
+	// hack used to stop the animation if there is one
+	// otherwise the animation keeps going after scrollTo which makes scrollTo useless
+	smoothScrollBy(0,0);
+	
     super.scrollTo(x, y);
     ReactScrollViewHelper.updateFabricScrollState(this);
     setPendingContentOffsets(x, y);
