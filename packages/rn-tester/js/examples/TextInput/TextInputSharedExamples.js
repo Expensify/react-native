@@ -923,4 +923,15 @@ module.exports = ([
       );
     },
   },
+  {
+    title: 'Overflowed text behavior on render',
+    render: function (): React.Node {
+      return (
+        <TextInput
+          style={styles.default}
+          defaultValue="The quick brown fox expertly jumps over the lazy dog, lying still on the grass."
+        />
+      );
+    },
+  },
 ]: Array<RNTesterModuleExample>);
